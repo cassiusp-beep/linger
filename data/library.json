@@ -1,0 +1,3442 @@
+{
+ "library": {
+  "cameras": [
+   {
+    "camera_id": "sf_streets_cam-2",
+    "camera_n": "2",
+    "location": "san_francisco",
+    "place": "San Francisco street",
+    "clips": 13,
+    "stops": 37,
+    "zones": {
+     "BL": 21,
+     "BR": 7,
+     "ML": 5,
+     "MR": 1,
+     "TC": 3
+    },
+    "top_zone": "BL",
+    "top_feature": "bus stop",
+    "night_share": 0.4324,
+    "groups": 9,
+    "buses": 3,
+    "analyzed": true,
+    "reason": null,
+    "score": 5.6722,
+    "rank": 1
+   },
+   {
+    "camera_id": "sf_streets_cam-3",
+    "camera_n": "3",
+    "location": "san_francisco",
+    "place": "San Francisco street",
+    "clips": 5,
+    "stops": 11,
+    "zones": {
+     "BL": 11
+    },
+    "top_zone": "BL",
+    "top_feature": "bench",
+    "night_share": 0.4545,
+    "groups": 4,
+    "buses": 1,
+    "analyzed": true,
+    "reason": null,
+    "score": 3.1429,
+    "rank": 2
+   },
+   {
+    "camera_id": "pie_cam-3",
+    "camera_n": "3",
+    "location": "toronto",
+    "place": "Toronto drive",
+    "clips": 1080,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Moving dashcam: positions in the frame don't map to places",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "neighborhood_cam-1",
+    "camera_n": "1",
+    "location": "neighborhood",
+    "place": "Neighborhood street",
+    "clips": 307,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Not analyzed yet: re-ingest with the Linger prompt",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "i24_cam-1",
+    "camera_n": "1",
+    "location": "nashville",
+    "place": "Nashville highway",
+    "clips": 180,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Highway: no pedestrian space to design",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "sf_streets_cam-4",
+    "camera_n": "4",
+    "location": "san_francisco",
+    "place": "San Francisco street",
+    "clips": 180,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Not analyzed yet: re-ingest with the Linger prompt",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "smartspace_cam-1",
+    "camera_n": "1",
+    "location": "indoor",
+    "place": "Indoor public space",
+    "clips": 180,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Not analyzed yet: re-ingest with the Linger prompt",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "sf_streets_cam-1",
+    "camera_n": "1",
+    "location": "san_francisco",
+    "place": "San Francisco street",
+    "clips": 148,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Not analyzed yet: re-ingest with the Linger prompt",
+    "score": 0.0,
+    "rank": null
+   },
+   {
+    "camera_id": "sdg_warehouse_cam-2",
+    "camera_n": "2",
+    "location": "warehouse3",
+    "place": "Warehouse",
+    "clips": 60,
+    "stops": 0,
+    "zones": {},
+    "top_zone": null,
+    "top_feature": null,
+    "night_share": 0.0,
+    "groups": 0,
+    "buses": 0,
+    "analyzed": false,
+    "reason": "Industrial floor: not a public space",
+    "score": 0.0,
+    "rank": null
+   }
+  ],
+  "total_clips": 2153,
+  "total_cameras": 9,
+  "analyzed_cameras": 2,
+  "source": "segments.json"
+ },
+ "runs": {
+  "sf_streets_cam-2": {
+   "question": "Where should seating go on this block?",
+   "camera_id": "sf_streets_cam-2",
+   "mode": "rules",
+   "segments": [
+    {
+     "segment_id": "cam2_s00",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 0,
+     "caption": "Day. [t=1s] 3 walking, BC. [t=4s] 1 stops, BL, near bus stop. [t=8s] 1 lingering, BL, near bus stop.",
+     "clip_url": "/app/api/clip/cam2_s00"
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 10,
+     "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 4 walking, BC. [t=7s] 1 path change, BC, near bus stop, detour.",
+     "clip_url": "/app/api/clip/cam2_s01"
+    },
+    {
+     "segment_id": "cam2_s02",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 20,
+     "caption": "Day. [t=3s] 3 standing, BL, group, near bus stop. [t=5s] car blocks the crosswalk, BR, near crosswalk. [t=7s] 2 waiting to cross, BR, near crosswalk.",
+     "clip_url": "/app/api/clip/cam2_s02"
+    },
+    {
+     "segment_id": "cam2_s03",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 30,
+     "caption": "Day. [t=1s] 1 sitting, ML, near ledge. [t=4s] 1 stops, ML, near ledge. [t=9s] 2 walking, BC.",
+     "clip_url": "/app/api/clip/cam2_s03"
+    },
+    {
+     "segment_id": "cam2_s04",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 40,
+     "caption": "Day. [t=2s] 2 lingering, ML, group, near ledge. [t=6s] 1 path change, BC, near pole, slowdown.",
+     "clip_url": "/app/api/clip/cam2_s04"
+    },
+    {
+     "segment_id": "cam2_s05",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 50,
+     "caption": "Day. [t=0s] 5 walking, BC. [t=3s] 3 waiting to cross, BR, group, near crosswalk. [t=8s] 1 stops, BL, near bus stop.",
+     "clip_url": "/app/api/clip/cam2_s05"
+    },
+    {
+     "segment_id": "cam2_s06",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 60,
+     "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 1 path change, BC, near bus stop, detour.",
+     "clip_url": "/app/api/clip/cam2_s06"
+    },
+    {
+     "segment_id": "cam2_s07",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 70,
+     "caption": "Day. [t=3s] 1 sitting, ML, near ledge. [t=6s] 1 lingering, MR, near tree.",
+     "clip_url": "/app/api/clip/cam2_s07"
+    },
+    {
+     "segment_id": "cam2_s08",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 80,
+     "caption": "Night. [t=1s] 2 standing, BL, group, near bus stop. [t=4s] 1 lingering, BL, near bus stop. [t=7s] 2 walking, BR.",
+     "clip_url": "/app/api/clip/cam2_s08"
+    },
+    {
+     "segment_id": "cam2_s09",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 90,
+     "caption": "Night. [t=2s] 1 lingering, BL, near bus stop. [t=5s] 2 standing, BL, group, near bus stop. [t=8s] 1 path change, C, near pole, detour.",
+     "clip_url": "/app/api/clip/cam2_s09"
+    },
+    {
+     "segment_id": "cam2_s10",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 100,
+     "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 3 standing, BL, group, near bus stop. [t=8s] 1 standing, TC, near storefront.",
+     "clip_url": "/app/api/clip/cam2_s10"
+    },
+    {
+     "segment_id": "cam2_s11",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 110,
+     "caption": "Night. [t=1s] 1 lingering, BL, near bus stop. [t=4s] 2 waiting to cross, BR, near crosswalk. [t=7s] car blocks the crosswalk, BR, near crosswalk. [t=9s] 1 path change, BR, near crosswalk, detour.",
+     "clip_url": "/app/api/clip/cam2_s11"
+    },
+    {
+     "segment_id": "cam2_s12",
+     "camera_id": "sf_streets_cam-2",
+     "offset": 120,
+     "caption": "Night. [t=3s] 2 stops, TC, group, near storefront. [t=6s] 1 lingering, BL, near bus stop.",
+     "clip_url": "/app/api/clip/cam2_s12"
+    }
+   ],
+   "events": [
+    {
+     "segment_id": "cam2_s00",
+     "camera_id": "sf_streets_cam-2",
+     "t": 1.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 3,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e000",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam2_s00",
+     "camera_id": "sf_streets_cam-2",
+     "t": 4.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stop",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e001",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s00",
+     "camera_id": "sf_streets_cam-2",
+     "t": 8.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e002",
+     "degree": 8
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "t": 11.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "vehicle",
+     "vehicle": "bus",
+     "behavior": "bus_arrive",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e003",
+     "degree": 9
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "t": 13.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e004",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "t": 15.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 4,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e005",
+     "degree": 9
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "t": 17.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e006",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s02",
+     "camera_id": "sf_streets_cam-2",
+     "t": 23.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 3,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e007",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s02",
+     "camera_id": "sf_streets_cam-2",
+     "t": 25.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "vehicle",
+     "vehicle": "car",
+     "behavior": "crosswalk_block",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e008",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam2_s02",
+     "camera_id": "sf_streets_cam-2",
+     "t": 27.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 2,
+     "group": false,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e009",
+     "degree": 6
+    },
+    {
+     "segment_id": "cam2_s03",
+     "camera_id": "sf_streets_cam-2",
+     "t": 31.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "ML",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "ledge",
+     "confidence": 0.75,
+     "id": "e010",
+     "degree": 4
+    },
+    {
+     "segment_id": "cam2_s03",
+     "camera_id": "sf_streets_cam-2",
+     "t": 34.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stop",
+     "zone": "ML",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "ledge",
+     "confidence": 0.75,
+     "id": "e011",
+     "degree": 3
+    },
+    {
+     "segment_id": "cam2_s03",
+     "camera_id": "sf_streets_cam-2",
+     "t": 39.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 2,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e012",
+     "degree": 4
+    },
+    {
+     "segment_id": "cam2_s04",
+     "camera_id": "sf_streets_cam-2",
+     "t": 42.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "ML",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "ledge",
+     "confidence": 0.75,
+     "id": "e013",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s04",
+     "camera_id": "sf_streets_cam-2",
+     "t": 46.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "pole",
+     "confidence": 0.75,
+     "id": "e014",
+     "degree": 8
+    },
+    {
+     "segment_id": "cam2_s05",
+     "camera_id": "sf_streets_cam-2",
+     "t": 50.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 5,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e015",
+     "degree": 6
+    },
+    {
+     "segment_id": "cam2_s05",
+     "camera_id": "sf_streets_cam-2",
+     "t": 53.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 3,
+     "group": true,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e016",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam2_s05",
+     "camera_id": "sf_streets_cam-2",
+     "t": 58.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stop",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e017",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s06",
+     "camera_id": "sf_streets_cam-2",
+     "t": 61.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "vehicle",
+     "vehicle": "bus",
+     "behavior": "bus_arrive",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e018",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s06",
+     "camera_id": "sf_streets_cam-2",
+     "t": 63.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e019",
+     "degree": 11
+    },
+    {
+     "segment_id": "cam2_s06",
+     "camera_id": "sf_streets_cam-2",
+     "t": 65.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e020",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s07",
+     "camera_id": "sf_streets_cam-2",
+     "t": 73.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "ML",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "ledge",
+     "confidence": 0.75,
+     "id": "e021",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam2_s07",
+     "camera_id": "sf_streets_cam-2",
+     "t": 76.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "MR",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "tree",
+     "confidence": 0.75,
+     "id": "e022",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s08",
+     "camera_id": "sf_streets_cam-2",
+     "t": 81.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e023",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s08",
+     "camera_id": "sf_streets_cam-2",
+     "t": 84.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e024",
+     "degree": 9
+    },
+    {
+     "segment_id": "cam2_s08",
+     "camera_id": "sf_streets_cam-2",
+     "t": 87.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 2,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e025",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s09",
+     "camera_id": "sf_streets_cam-2",
+     "t": 92.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e026",
+     "degree": 10
+    },
+    {
+     "segment_id": "cam2_s09",
+     "camera_id": "sf_streets_cam-2",
+     "t": 95.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e027",
+     "degree": 9
+    },
+    {
+     "segment_id": "cam2_s09",
+     "camera_id": "sf_streets_cam-2",
+     "t": 98.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "C",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "pole",
+     "confidence": 0.75,
+     "id": "e028",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s10",
+     "camera_id": "sf_streets_cam-2",
+     "t": 102.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "vehicle",
+     "vehicle": "bus",
+     "behavior": "bus_arrive",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e029",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s10",
+     "camera_id": "sf_streets_cam-2",
+     "t": 104.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 3,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e030",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam2_s10",
+     "camera_id": "sf_streets_cam-2",
+     "t": 108.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "TC",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "storefront",
+     "confidence": 0.75,
+     "id": "e031",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s11",
+     "camera_id": "sf_streets_cam-2",
+     "t": 111.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e032",
+     "degree": 6
+    },
+    {
+     "segment_id": "cam2_s11",
+     "camera_id": "sf_streets_cam-2",
+     "t": 114.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 2,
+     "group": false,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e033",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s11",
+     "camera_id": "sf_streets_cam-2",
+     "t": 117.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "vehicle",
+     "vehicle": "car",
+     "behavior": "crosswalk_block",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e034",
+     "degree": 2
+    },
+    {
+     "segment_id": "cam2_s11",
+     "camera_id": "sf_streets_cam-2",
+     "t": 119.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "BR",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "crosswalk",
+     "confidence": 0.75,
+     "id": "e035",
+     "degree": 3
+    },
+    {
+     "segment_id": "cam2_s12",
+     "camera_id": "sf_streets_cam-2",
+     "t": 123.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stop",
+     "zone": "TC",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "storefront",
+     "confidence": 0.75,
+     "id": "e036",
+     "degree": 1
+    },
+    {
+     "segment_id": "cam2_s12",
+     "camera_id": "sf_streets_cam-2",
+     "t": 126.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e037",
+     "degree": 4
+    }
+   ],
+   "links": [
+    {
+     "id": "l000",
+     "from": "e000",
+     "to": "e001",
+     "score": 0.67,
+     "dt": 3.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person stopping at BL near the bus stop, 3s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l001",
+     "from": "e000",
+     "to": "e006",
+     "score": 0.625,
+     "dt": 16.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the bus stop, 16s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l002",
+     "from": "e000",
+     "to": "e002",
+     "score": 0.592,
+     "dt": 7.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person lingering at BL near the bus stop, 7s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l003",
+     "from": "e000",
+     "to": "e003",
+     "score": 0.543,
+     "dt": 10.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 10s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l004",
+     "from": "e000",
+     "to": "e004",
+     "score": 0.514,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people standing at BL near the bus stop, 12s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l005",
+     "from": "e001",
+     "to": "e002",
+     "score": 0.889,
+     "dt": 4.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 4s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l006",
+     "from": "e001",
+     "to": "e004",
+     "score": 0.779,
+     "dt": 9.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 9s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l007",
+     "from": "e001",
+     "to": "e003",
+     "score": 0.712,
+     "dt": 7.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 7s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l008",
+     "from": "e001",
+     "to": "e007",
+     "score": 0.653,
+     "dt": 19.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 19s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l009",
+     "from": "e001",
+     "to": "e006",
+     "score": 0.601,
+     "dt": 13.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 13s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l010",
+     "from": "e001",
+     "to": "e005",
+     "score": 0.528,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "4 people walking at BC, 11s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l011",
+     "from": "e002",
+     "to": "e003",
+     "score": 0.87,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 3s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l012",
+     "from": "e002",
+     "to": "e004",
+     "score": 0.869,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 5s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l013",
+     "from": "e002",
+     "to": "e007",
+     "score": 0.716,
+     "dt": 15.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 15s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l014",
+     "from": "e002",
+     "to": "e006",
+     "score": 0.659,
+     "dt": 9.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 9s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l015",
+     "from": "e002",
+     "to": "e005",
+     "score": 0.592,
+     "dt": 7.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "4 people walking at BC, 7s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l016",
+     "from": "e002",
+     "to": "e010",
+     "score": 0.538,
+     "dt": 23.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person sitting at ML near the ledge, 23s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l017",
+     "from": "e003",
+     "to": "e004",
+     "score": 0.952,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l018",
+     "from": "e003",
+     "to": "e007",
+     "score": 0.774,
+     "dt": 12.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 12s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l019",
+     "from": "e003",
+     "to": "e005",
+     "score": 0.689,
+     "dt": 4.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "4 people walking at BC, 4s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l020",
+     "from": "e003",
+     "to": "e006",
+     "score": 0.61,
+     "dt": 6.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 6s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l021",
+     "from": "e003",
+     "to": "e019",
+     "score": 0.537,
+     "dt": 52.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 52s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l022",
+     "from": "e003",
+     "to": "e017",
+     "score": 0.528,
+     "dt": 47.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person stopping at BL near the bus stop, 47s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l023",
+     "from": "e004",
+     "to": "e006",
+     "score": 0.749,
+     "dt": 4.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 4s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l024",
+     "from": "e004",
+     "to": "e007",
+     "score": 0.723,
+     "dt": 10.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 10s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l025",
+     "from": "e004",
+     "to": "e005",
+     "score": 0.692,
+     "dt": 2.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "4 people walking at BC, 2s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l026",
+     "from": "e005",
+     "to": "e006",
+     "score": 0.852,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the bus stop, 2s after 4 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l027",
+     "from": "e005",
+     "to": "e007",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people standing at BL near the bus stop, 8s after 4 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l028",
+     "from": "e005",
+     "to": "e008",
+     "score": 0.543,
+     "dt": 10.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "A car blocking the crosswalk at BR near the crosswalk, 10s after 4 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l029",
+     "from": "e005",
+     "to": "e009",
+     "score": 0.514,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people standing at BR near the crosswalk, 12s after 4 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l030",
+     "from": "e005",
+     "to": "e014",
+     "score": 0.506,
+     "dt": 31.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the pole, 31s after 4 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l031",
+     "from": "e006",
+     "to": "e007",
+     "score": 0.61,
+     "dt": 6.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people standing at BL near the bus stop, 6s after 1 person changing path at BC near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l032",
+     "from": "e006",
+     "to": "e008",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "A car blocking the crosswalk at BR near the crosswalk, 8s after 1 person changing path at BC near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l033",
+     "from": "e006",
+     "to": "e009",
+     "score": 0.543,
+     "dt": 10.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people standing at BR near the crosswalk, 10s after 1 person changing path at BC near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l034",
+     "from": "e006",
+     "to": "e012",
+     "score": 0.526,
+     "dt": 22.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "2 people walking at BC, 22s after 1 person changing path at BC near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l035",
+     "from": "e007",
+     "to": "e010",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person sitting at ML near the ledge, 8s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l036",
+     "from": "e007",
+     "to": "e013",
+     "score": 0.533,
+     "dt": 19.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "2 people lingering at ML near the ledge, 19s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l037",
+     "from": "e007",
+     "to": "e011",
+     "score": 0.528,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person stopping at ML near the ledge, 11s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l038",
+     "from": "e007",
+     "to": "e018",
+     "score": 0.515,
+     "dt": 38.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 38s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l039",
+     "from": "e008",
+     "to": "e009",
+     "score": 0.912,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "2 people standing at BR near the crosswalk, 2s after a car blocking the crosswalk at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l040",
+     "from": "e008",
+     "to": "e016",
+     "score": 0.583,
+     "dt": 28.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "3 people standing at BR near the crosswalk, 28s after a car blocking the crosswalk at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l041",
+     "from": "e008",
+     "to": "e014",
+     "score": 0.555,
+     "dt": 21.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the pole, 21s after a car blocking the crosswalk at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l042",
+     "from": "e009",
+     "to": "e016",
+     "score": 0.556,
+     "dt": 26.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BR near the crosswalk, 26s after 2 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l043",
+     "from": "e009",
+     "to": "e014",
+     "score": 0.533,
+     "dt": 19.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the pole, 19s after 2 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l044",
+     "from": "e009",
+     "to": "e012",
+     "score": 0.514,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people walking at BC, 12s after 2 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l045",
+     "from": "e010",
+     "to": "e011",
+     "score": 0.89,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person stopping at ML near the ledge, 3s after 1 person sitting at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l046",
+     "from": "e010",
+     "to": "e013",
+     "score": 0.788,
+     "dt": 11.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people lingering at ML near the ledge, 11s after 1 person sitting at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l047",
+     "from": "e011",
+     "to": "e013",
+     "score": 0.815,
+     "dt": 8.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people lingering at ML near the ledge, 8s after 1 person stopping at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l048",
+     "from": "e012",
+     "to": "e014",
+     "score": 0.752,
+     "dt": 7.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the pole, 7s after 2 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l049",
+     "from": "e012",
+     "to": "e020",
+     "score": 0.536,
+     "dt": 26.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the bus stop, 26s after 2 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l050",
+     "from": "e013",
+     "to": "e021",
+     "score": 0.606,
+     "dt": 31.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person sitting at ML near the ledge, 31s after 2 people lingering at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l051",
+     "from": "e013",
+     "to": "e017",
+     "score": 0.585,
+     "dt": 16.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person stopping at BL near the bus stop, 16s after 2 people lingering at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l052",
+     "from": "e013",
+     "to": "e019",
+     "score": 0.535,
+     "dt": 21.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 21s after 2 people lingering at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l053",
+     "from": "e013",
+     "to": "e018",
+     "score": 0.513,
+     "dt": 19.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 19s after 2 people lingering at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l054",
+     "from": "e014",
+     "to": "e015",
+     "score": 0.769,
+     "dt": 4.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "5 people walking at BC, 4s after 1 person changing path at BC near the pole.",
+     "is_causal": false
+    },
+    {
+     "id": "l055",
+     "from": "e014",
+     "to": "e016",
+     "score": 0.592,
+     "dt": 7.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people standing at BR near the crosswalk, 7s after 1 person changing path at BC near the pole.",
+     "is_causal": false
+    },
+    {
+     "id": "l056",
+     "from": "e014",
+     "to": "e020",
+     "score": 0.553,
+     "dt": 19.0,
+     "zone_rel": "same",
+     "type": "follows",
+     "rationale": "1 person changing path at BC near the bus stop, 19s after 1 person changing path at BC near the pole.",
+     "is_causal": false
+    },
+    {
+     "id": "l057",
+     "from": "e014",
+     "to": "e017",
+     "score": 0.514,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person stopping at BL near the bus stop, 12s after 1 person changing path at BC near the pole.",
+     "is_causal": false
+    },
+    {
+     "id": "l058",
+     "from": "e015",
+     "to": "e016",
+     "score": 0.67,
+     "dt": 3.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people standing at BR near the crosswalk, 3s after 5 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l059",
+     "from": "e015",
+     "to": "e020",
+     "score": 0.636,
+     "dt": 15.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the bus stop, 15s after 5 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l060",
+     "from": "e015",
+     "to": "e017",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person stopping at BL near the bus stop, 8s after 5 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l061",
+     "from": "e015",
+     "to": "e018",
+     "score": 0.528,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 11s after 5 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l062",
+     "from": "e015",
+     "to": "e019",
+     "score": 0.501,
+     "dt": 13.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people standing at BL near the bus stop, 13s after 5 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l063",
+     "from": "e016",
+     "to": "e020",
+     "score": 0.614,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 12s after 3 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l064",
+     "from": "e017",
+     "to": "e019",
+     "score": 0.849,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 5s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l065",
+     "from": "e017",
+     "to": "e018",
+     "score": 0.79,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 3s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l066",
+     "from": "e017",
+     "to": "e020",
+     "score": 0.692,
+     "dt": 7.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 7s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l067",
+     "from": "e017",
+     "to": "e023",
+     "score": 0.618,
+     "dt": 23.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 23s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l068",
+     "from": "e017",
+     "to": "e024",
+     "score": 0.616,
+     "dt": 26.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 26s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l069",
+     "from": "e017",
+     "to": "e026",
+     "score": 0.571,
+     "dt": 34.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 34s after 1 person stopping at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l070",
+     "from": "e018",
+     "to": "e019",
+     "score": 0.952,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l071",
+     "from": "e018",
+     "to": "e023",
+     "score": 0.684,
+     "dt": 20.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 20s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l072",
+     "from": "e018",
+     "to": "e020",
+     "score": 0.649,
+     "dt": 4.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 4s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l073",
+     "from": "e018",
+     "to": "e024",
+     "score": 0.638,
+     "dt": 23.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 23s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l074",
+     "from": "e018",
+     "to": "e027",
+     "score": 0.591,
+     "dt": 34.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 34s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l075",
+     "from": "e018",
+     "to": "e026",
+     "score": 0.586,
+     "dt": 31.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 31s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l076",
+     "from": "e019",
+     "to": "e020",
+     "score": 0.792,
+     "dt": 2.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bus stop, 2s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l077",
+     "from": "e019",
+     "to": "e024",
+     "score": 0.635,
+     "dt": 21.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 21s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l078",
+     "from": "e019",
+     "to": "e023",
+     "score": 0.623,
+     "dt": 18.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 18s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l079",
+     "from": "e019",
+     "to": "e026",
+     "score": 0.577,
+     "dt": 29.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 29s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l080",
+     "from": "e019",
+     "to": "e021",
+     "score": 0.543,
+     "dt": 10.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person sitting at ML near the ledge, 10s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l081",
+     "from": "e019",
+     "to": "e027",
+     "score": 0.521,
+     "dt": 32.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 32s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l082",
+     "from": "e021",
+     "to": "e024",
+     "score": 0.668,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 11s after 1 person sitting at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l083",
+     "from": "e021",
+     "to": "e023",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 8s after 1 person sitting at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l084",
+     "from": "e021",
+     "to": "e026",
+     "score": 0.573,
+     "dt": 19.0,
+     "zone_rel": "adjacent",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 19s after 1 person sitting at ML near the ledge.",
+     "is_causal": false
+    },
+    {
+     "id": "l085",
+     "from": "e022",
+     "to": "e025",
+     "score": 0.528,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people walking at BR, 11s after 1 person lingering at MR near the tree.",
+     "is_causal": false
+    },
+    {
+     "id": "l086",
+     "from": "e022",
+     "to": "e028",
+     "score": 0.506,
+     "dt": 22.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at C near the pole, 22s after 1 person lingering at MR near the tree.",
+     "is_causal": false
+    },
+    {
+     "id": "l087",
+     "from": "e023",
+     "to": "e024",
+     "score": 0.89,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 3s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l088",
+     "from": "e023",
+     "to": "e026",
+     "score": 0.748,
+     "dt": 11.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 11s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l089",
+     "from": "e023",
+     "to": "e027",
+     "score": 0.668,
+     "dt": 14.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 14s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l090",
+     "from": "e023",
+     "to": "e029",
+     "score": 0.615,
+     "dt": 21.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 21s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l091",
+     "from": "e023",
+     "to": "e030",
+     "score": 0.578,
+     "dt": 23.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 23s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l092",
+     "from": "e023",
+     "to": "e032",
+     "score": 0.572,
+     "dt": 30.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 30s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l093",
+     "from": "e024",
+     "to": "e027",
+     "score": 0.768,
+     "dt": 11.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 11s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l094",
+     "from": "e024",
+     "to": "e026",
+     "score": 0.695,
+     "dt": 8.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 8s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l095",
+     "from": "e024",
+     "to": "e030",
+     "score": 0.664,
+     "dt": 20.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 20s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l096",
+     "from": "e024",
+     "to": "e029",
+     "score": 0.643,
+     "dt": 18.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 18s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l097",
+     "from": "e025",
+     "to": "e035",
+     "score": 0.501,
+     "dt": 32.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BR near the crosswalk, 32s after 2 people walking at BR.",
+     "is_causal": false
+    },
+    {
+     "id": "l098",
+     "from": "e026",
+     "to": "e027",
+     "score": 0.91,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 3s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l099",
+     "from": "e026",
+     "to": "e030",
+     "score": 0.754,
+     "dt": 12.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 12s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l100",
+     "from": "e026",
+     "to": "e029",
+     "score": 0.743,
+     "dt": 10.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 10s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l101",
+     "from": "e026",
+     "to": "e032",
+     "score": 0.553,
+     "dt": 19.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 19s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l102",
+     "from": "e027",
+     "to": "e029",
+     "score": 0.792,
+     "dt": 7.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 7s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l103",
+     "from": "e027",
+     "to": "e030",
+     "score": 0.739,
+     "dt": 9.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 9s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l104",
+     "from": "e027",
+     "to": "e032",
+     "score": 0.685,
+     "dt": 16.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 16s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l105",
+     "from": "e027",
+     "to": "e037",
+     "score": 0.566,
+     "dt": 31.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 31s after 2 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l106",
+     "from": "e028",
+     "to": "e031",
+     "score": 0.543,
+     "dt": 10.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person standing at TC near the storefront, 10s after 1 person changing path at C near the pole.",
+     "is_causal": false
+    },
+    {
+     "id": "l107",
+     "from": "e029",
+     "to": "e030",
+     "score": 0.952,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "3 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l108",
+     "from": "e029",
+     "to": "e032",
+     "score": 0.799,
+     "dt": 9.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 9s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l109",
+     "from": "e029",
+     "to": "e037",
+     "score": 0.631,
+     "dt": 24.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 24s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l110",
+     "from": "e030",
+     "to": "e032",
+     "score": 0.812,
+     "dt": 7.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 7s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l111",
+     "from": "e030",
+     "to": "e037",
+     "score": 0.626,
+     "dt": 22.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 22s after 3 people standing at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l112",
+     "from": "e031",
+     "to": "e036",
+     "score": 0.596,
+     "dt": 15.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people stopping at TC near the storefront, 15s after 1 person standing at TC near the storefront.",
+     "is_causal": false
+    },
+    {
+     "id": "l113",
+     "from": "e032",
+     "to": "e037",
+     "score": 0.596,
+     "dt": 15.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person lingering at BL near the bus stop, 15s after 1 person lingering at BL near the bus stop.",
+     "is_causal": false
+    },
+    {
+     "id": "l114",
+     "from": "e033",
+     "to": "e035",
+     "score": 0.849,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "blocks",
+     "rationale": "1 person changing path at BR near the crosswalk, 5s after 2 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l115",
+     "from": "e033",
+     "to": "e034",
+     "score": 0.79,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A car blocking the crosswalk at BR near the crosswalk, 3s after 2 people standing at BR near the crosswalk.",
+     "is_causal": false
+    },
+    {
+     "id": "l116",
+     "from": "e034",
+     "to": "e035",
+     "score": 0.952,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "blocks",
+     "rationale": "1 person changing path at BR near the crosswalk, 2s after a car blocking the crosswalk at BR near the crosswalk.",
+     "is_causal": false
+    }
+   ],
+   "critical": [
+    "e019",
+    "e006",
+    "e007",
+    "e017",
+    "e018"
+   ],
+   "selected_link": "l070",
+   "evidence": [
+    {
+     "segment_id": "cam2_s00",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=1s] 3 walking, BC. [t=4s] 1 stops, BL, near bus stop. [t=8s] 1 lingering, BL, near bus stop.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s00"
+    },
+    {
+     "segment_id": "cam2_s08",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Night. [t=1s] 2 standing, BL, group, near bus stop. [t=4s] 1 lingering, BL, near bus stop. [t=7s] 2 walking, BR.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s08"
+    },
+    {
+     "segment_id": "cam2_s09",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Night. [t=2s] 1 lingering, BL, near bus stop. [t=5s] 2 standing, BL, group, near bus stop. [t=8s] 1 path change, C, near pole, detour.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s09"
+    },
+    {
+     "segment_id": "cam2_s12",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Night. [t=3s] 2 stops, TC, group, near storefront. [t=6s] 1 lingering, BL, near bus stop.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s12"
+    },
+    {
+     "segment_id": "cam2_s03",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=1s] 1 sitting, ML, near ledge. [t=4s] 1 stops, ML, near ledge. [t=9s] 2 walking, BC.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s03"
+    },
+    {
+     "segment_id": "cam2_s07",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=3s] 1 sitting, ML, near ledge. [t=6s] 1 lingering, MR, near tree.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s07"
+    },
+    {
+     "segment_id": "cam2_s10",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 3 standing, BL, group, near bus stop. [t=8s] 1 standing, TC, near storefront.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s10"
+    },
+    {
+     "segment_id": "cam2_s01",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 4 walking, BC. [t=7s] 1 path change, BC, near bus stop, detour.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s01"
+    },
+    {
+     "segment_id": "cam2_s04",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=2s] 2 lingering, ML, group, near ledge. [t=6s] 1 path change, BC, near pole, slowdown.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s04"
+    },
+    {
+     "segment_id": "cam2_s06",
+     "camera_id": "sf_streets_cam-2",
+     "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 1 path change, BC, near bus stop, detour.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam2_s06"
+    }
+   ],
+   "branches": [
+    {
+     "id": "b1",
+     "kind": "baseline",
+     "intervention": "No change",
+     "prediction": "People likely keep standing at BL near the bus stop in short stops; groups form and break up within a minute.",
+     "evidence": [
+      {
+       "segment_id": "cam2_s00",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s01",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s06",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s08",
+       "match": "same_space"
+      }
+     ],
+     "risk": "None added. Standing groups may keep spilling into the walking path.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "Standing cluster at BL"
+      },
+      {
+       "t": "+10m",
+       "state": "Short stops repeat"
+      },
+      {
+       "t": "+30m",
+       "state": "Same pattern, no place to sit"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    },
+    {
+     "id": "b2",
+     "kind": "intervention",
+     "intervention": "Bench at BL beside the bus stop, facing the crosswalk",
+     "prediction": "In similar clips, stops near seating may turn into longer sitting and lingering at BL, with groups gathering beside them.",
+     "evidence": [
+      {
+       "segment_id": "cam2_s03",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s07",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s00",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s01",
+       "match": "same_space"
+      }
+     ],
+     "risk": "Keep at least 5 ft of clear path behind the bench for wheelchairs and strollers.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "First person sits"
+      },
+      {
+       "t": "+10m",
+       "state": "Others stop beside the bench"
+      },
+      {
+       "t": "+30m",
+       "state": "Longer stays, fewer people standing in the path"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    },
+    {
+     "id": "b3",
+     "kind": "intervention",
+     "intervention": "Pedestrian lighting over BL by the bus stop",
+     "prediction": "54% of stays at BL are at night. In similar clips, lit edges may keep night waits shorter and closer to the curb.",
+     "evidence": [
+      {
+       "segment_id": "cam2_s08",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s09",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s10",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam2_s12",
+       "match": "same_space"
+      }
+     ],
+     "risk": "Glare into ground-floor windows; keep fixtures low and shielded.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "Night waits under light"
+      },
+      {
+       "t": "+10m",
+       "state": "Groups gather in the lit area"
+      },
+      {
+       "t": "+30m",
+       "state": "Night stays look like day stays"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    }
+   ],
+   "recommendation": {
+    "zone": "BL",
+    "action": "Bench at BL beside the bus stop, facing the crosswalk",
+    "why": "BL has the most standing and lingering on this camera (21 person-stops) and no seating. In similar clips, people stay longer where there is a place to sit.",
+    "segment_ids": [
+     "cam2_s03",
+     "cam2_s07",
+     "cam2_s00",
+     "cam2_s01"
+    ],
+    "n": 4,
+    "label": "plausible, based on 4 clips"
+   },
+   "zone_stats": {
+    "BL": 21,
+    "BR": 7,
+    "ML": 5,
+    "TC": 3,
+    "MR": 1
+   },
+   "light_stats": {
+    "BL": {
+     "day": 10,
+     "night": 11,
+     "unknown": 0
+    },
+    "BR": {
+     "day": 5,
+     "night": 2,
+     "unknown": 0
+    },
+    "ML": {
+     "day": 5,
+     "night": 0,
+     "unknown": 0
+    },
+    "MR": {
+     "day": 1,
+     "night": 0,
+     "unknown": 0
+    },
+    "TC": {
+     "day": 0,
+     "night": 3,
+     "unknown": 0
+    }
+   },
+   "trace": [
+    {
+     "step": "Plan searches",
+     "tool": "rules",
+     "summary": "6 queries: people standing on the sidewalk; people lingering near the bus stop; group of people stopped together; person sitting on a bench or ledge; people walking around an obstacle; people waiting to cross",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Search footage",
+     "tool": "local caption search",
+     "summary": "13 matching segments on sf_streets_cam-2",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Load moments",
+     "tool": "segments + YOLO zones",
+     "summary": "13 segments, 0s to 130s",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Extract events",
+     "tool": "caption parser",
+     "summary": "38 behavior events on a 3x3 zone grid",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Link events",
+     "tool": "timing + proximity score",
+     "summary": "117 links above 0.5, 33 between vehicles and people",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Split day and night",
+     "tool": "segment light",
+     "summary": "21 daytime stays, 16 night stays; most night stays at BL",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Find critical moves",
+     "tool": "link degree",
+     "ms": 1,
+     "mode": "ok",
+     "summary": "5 critical moves; selected l070: 2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop."
+    },
+    {
+     "step": "Retrieve evidence",
+     "tool": "local caption search, all cameras",
+     "summary": "10 evidence segments across 1 cameras",
+     "ms": 39,
+     "mode": "ok"
+    },
+    {
+     "step": "Branch futures",
+     "tool": "templates",
+     "summary": "3 verified branches",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Verify citations",
+     "tool": "code check",
+     "ms": 1,
+     "mode": "ok",
+     "summary": "every cited clip exists; N recomputed: b1=4, b2=4, b3=4"
+    },
+    {
+     "step": "Recommend",
+     "tool": "rules",
+     "summary": "Bench at BL beside the bus stop, facing the crosswalk (plausible, based on 4 clips)",
+     "ms": 0,
+     "mode": "ok"
+    }
+   ],
+   "source": "segments.json"
+  },
+  "sf_streets_cam-3": {
+   "question": "Where should seating go on this block?",
+   "camera_id": "sf_streets_cam-3",
+   "mode": "rules",
+   "segments": [
+    {
+     "segment_id": "20261001_065332_set04_video_chunk_0020_segment_001_of_006",
+     "camera_id": "pie_cam-3",
+     "offset": 600.0,
+     "caption": "The scene is a straight, single-lane, one-way residential street with parked cars lining both sides. The ego vehicle travels along this road, passing a 30 mph speed limit sign on the right. Pedestrians are visible on the right sidewalk, including a person walking a dog. On the left side, a fenced area contains a small park with people sitting on benches. A silver car is parked ahead in the lane, partially blocking the ego vehicle\u2019s path. No traffic lights or stop signs are visible. The weather is clear with a blue sky and scattered clouds.",
+     "clip_url": "/app/api/clip/20261001_065332_set04_video_chunk_0020_segment_001_of_006"
+    },
+    {
+     "segment_id": "20261001_094101_sf1_chunk_0000_segment_002_of_006",
+     "camera_id": "sf_streets_cam-1",
+     "offset": 5.0,
+     "caption": "The scene shows a busy urban intersection with multiple vehicles and pedestrians. A red SUV and a silver sedan are seen turning at the intersection, while other cars, including a white sedan and a white SUV, are either waiting or moving through the area. A bus is visible in the background, and a truck with \"Sysco\" written on its side is parked near the corner. Several people are walking on the sidewalks and crossing the street, with some standing near the crosswalks. Traffic lights and street signs are clearly visible, indicating a well-regulated intersection. The presence of a bench, a fire hydrant, and a parking meter adds to the urban setting. The overall atmosphere is one of typical city activity with no apparent anomalies or safety concerns.",
+     "clip_url": "/app/api/clip/20261001_094101_sf1_chunk_0000_segment_002_of_006"
+    },
+    {
+     "segment_id": "20261001_094358_sf1_chunk_0007_segment_006_of_006",
+     "camera_id": "sf_streets_cam-1",
+     "offset": 235.0,
+     "caption": "A person wearing a backpack is walking across the crosswalk in the foreground, moving from left to right. Another individual in a gray shirt and black pants is also crossing the street, heading toward the camera. A person in a bright yellow shirt briefly enters the frame from the bottom right, walking past the parked vehicles. In the background, several pedestrians are crossing the street in various directions, some walking in groups and others alone. A few people are standing near the crosswalk, waiting to cross. A black SUV is parked on the right side of the street, partially blocking the view of the crosswalk. A dark-colored sedan is also parked nearby. A bus is visible in the distance, moving along the street. A bicycle is parked on the sidewalk near the crosswalk. A bench is located on the sidewalk, near the crosswalk. A parking meter is visible on the sidewalk, near the crosswalk. A traffic light is visible at the intersection, showing a red signal for vehicles.",
+     "clip_url": "/app/api/clip/20261001_094358_sf1_chunk_0007_segment_006_of_006"
+    },
+    {
+     "segment_id": "cam3_s00",
+     "camera_id": "sf_streets_cam-3",
+     "offset": 0,
+     "caption": "Day. [t=2s] 2 sitting, BL, group, near bench. [t=6s] 1 stops, BL, near bench.",
+     "clip_url": "/app/api/clip/cam3_s00"
+    },
+    {
+     "segment_id": "cam3_s01",
+     "camera_id": "sf_streets_cam-3",
+     "offset": 10,
+     "caption": "Day. [t=1s] 1 sitting, BL, near bench. [t=5s] 2 lingering, BL, group, near bench.",
+     "clip_url": "/app/api/clip/cam3_s01"
+    },
+    {
+     "segment_id": "cam3_s02",
+     "camera_id": "sf_streets_cam-3",
+     "offset": 20,
+     "caption": "Day. [t=3s] 3 walking, BC. [t=6s] 1 path change, BC, near bench, detour.",
+     "clip_url": "/app/api/clip/cam3_s02"
+    },
+    {
+     "segment_id": "cam3_s03",
+     "camera_id": "sf_streets_cam-3",
+     "offset": 30,
+     "caption": "Night. [t=2s] 2 sitting, BL, group, near bench. [t=7s] 1 sitting, BL, near bench.",
+     "clip_url": "/app/api/clip/cam3_s03"
+    },
+    {
+     "segment_id": "cam3_s04",
+     "camera_id": "sf_streets_cam-3",
+     "offset": 40,
+     "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 2 standing, BL, group, near bus stop.",
+     "clip_url": "/app/api/clip/cam3_s04"
+    },
+    {
+     "segment_id": "20261001_080614_2025_test_Warehouse_017_Camera_02_chunk_0000_segment_003_of_006",
+     "camera_id": "smartspace_cam-1",
+     "offset": 10.0,
+     "caption": "The scene takes place in a large warehouse with a gray floor and orange shelving units along the left wall. Several people and robots are present, moving around the space. On the left side, a person in a blue shirt and pink hard hat is walking near a robot with a light blue body. Another individual in a white outfit and orange hard hat is also visible near the shelving. In the center, a person in a purple hoodie is walking away from the camera, while another person in a white outfit and orange hard hat stands nearby. On the right side, a person in a white outfit and black pants is standing still, and a robot with a light blue body is walking towards the right edge of the frame. A small white robot is also visible near the right wall. In the background, a yellow forklift is parked near the right wall, and a bench is visible near the left wall. The overall activity appears to be a mix of human and robotic movement within the warehouse environment.",
+     "clip_url": "/app/api/clip/20261001_080614_2025_test_Warehouse_017_Camera_02_chunk_0000_segment_003_of_006"
+    },
+    {
+     "segment_id": "20261001_080730_2025_test_Warehouse_017_Camera_02_chunk_0003_segment_006_of_006",
+     "camera_id": "smartspace_cam-1",
+     "offset": 115.0,
+     "caption": "The scene takes place in a large, well-lit warehouse with a gray floor marked by white lines. On the left side, tall orange and gray shelving units hold stacked cardboard boxes. Several people are present, including workers in white uniforms and others wearing casual clothing such as a pink hard hat and a blue cap. Some individuals appear to be observing or interacting with each other, while others move around the space. A few robotic figures are also visible, standing or walking near the center and right side of the area. In the background, near the wall, there is a small bench and a person standing still. The overall activity suggests a mix of human and robotic presence in a logistics or storage environment.",
+     "clip_url": "/app/api/clip/20261001_080730_2025_test_Warehouse_017_Camera_02_chunk_0003_segment_006_of_006"
+    }
+   ],
+   "events": [
+    {
+     "segment_id": "cam3_s00",
+     "camera_id": "sf_streets_cam-3",
+     "t": 2.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e000",
+     "degree": 3
+    },
+    {
+     "segment_id": "cam3_s00",
+     "camera_id": "sf_streets_cam-3",
+     "t": 6.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stop",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e001",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam3_s01",
+     "camera_id": "sf_streets_cam-3",
+     "t": 11.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e002",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam3_s01",
+     "camera_id": "sf_streets_cam-3",
+     "t": 15.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "linger",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e003",
+     "degree": 9
+    },
+    {
+     "segment_id": "cam3_s02",
+     "camera_id": "sf_streets_cam-3",
+     "t": 23.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "walk",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 3,
+     "group": false,
+     "near": null,
+     "confidence": 0.75,
+     "id": "e004",
+     "degree": 4
+    },
+    {
+     "segment_id": "cam3_s02",
+     "camera_id": "sf_streets_cam-3",
+     "t": 26.0,
+     "dur": 3,
+     "light": "day",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "path_change",
+     "zone": "BC",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e005",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam3_s03",
+     "camera_id": "sf_streets_cam-3",
+     "t": 32.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e006",
+     "degree": 7
+    },
+    {
+     "segment_id": "cam3_s03",
+     "camera_id": "sf_streets_cam-3",
+     "t": 37.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "sit",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bench",
+     "confidence": 0.75,
+     "id": "e007",
+     "degree": 5
+    },
+    {
+     "segment_id": "cam3_s04",
+     "camera_id": "sf_streets_cam-3",
+     "t": 42.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "vehicle",
+     "vehicle": "bus",
+     "behavior": "bus_arrive",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 1,
+     "group": false,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e008",
+     "degree": 4
+    },
+    {
+     "segment_id": "cam3_s04",
+     "camera_id": "sf_streets_cam-3",
+     "t": 44.0,
+     "dur": 3,
+     "light": "night",
+     "actor": "person",
+     "vehicle": null,
+     "behavior": "stand",
+     "zone": "BL",
+     "zone_guessed": false,
+     "count": 2,
+     "group": true,
+     "near": "bus stop",
+     "confidence": 0.75,
+     "id": "e009",
+     "degree": 5
+    }
+   ],
+   "links": [
+    {
+     "id": "l000",
+     "from": "e000",
+     "to": "e001",
+     "score": 0.869,
+     "dt": 4.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person stopping at BL near the bench, 4s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l001",
+     "from": "e000",
+     "to": "e003",
+     "score": 0.761,
+     "dt": 13.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people lingering at BL near the bench, 13s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l002",
+     "from": "e000",
+     "to": "e002",
+     "score": 0.679,
+     "dt": 9.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person sitting at BL near the bench, 9s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l003",
+     "from": "e001",
+     "to": "e003",
+     "score": 0.799,
+     "dt": 9.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people lingering at BL near the bench, 9s after 1 person stopping at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l004",
+     "from": "e001",
+     "to": "e002",
+     "score": 0.749,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person sitting at BL near the bench, 5s after 1 person stopping at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l005",
+     "from": "e001",
+     "to": "e009",
+     "score": 0.535,
+     "dt": 38.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 38s after 1 person stopping at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l006",
+     "from": "e001",
+     "to": "e005",
+     "score": 0.524,
+     "dt": 20.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bench, 20s after 1 person stopping at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l007",
+     "from": "e002",
+     "to": "e003",
+     "score": 0.909,
+     "dt": 4.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people lingering at BL near the bench, 4s after 1 person sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l008",
+     "from": "e002",
+     "to": "e006",
+     "score": 0.535,
+     "dt": 21.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people sitting at BL near the bench, 21s after 1 person sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l009",
+     "from": "e002",
+     "to": "e004",
+     "score": 0.514,
+     "dt": 12.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people walking at BC, 12s after 1 person sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l010",
+     "from": "e003",
+     "to": "e006",
+     "score": 0.714,
+     "dt": 17.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people sitting at BL near the bench, 17s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l011",
+     "from": "e003",
+     "to": "e007",
+     "score": 0.666,
+     "dt": 22.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person sitting at BL near the bench, 22s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l012",
+     "from": "e003",
+     "to": "e005",
+     "score": 0.628,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "blocks",
+     "rationale": "1 person changing path at BC near the bench, 11s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l013",
+     "from": "e003",
+     "to": "e009",
+     "score": 0.597,
+     "dt": 29.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 29s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l014",
+     "from": "e003",
+     "to": "e004",
+     "score": 0.575,
+     "dt": 8.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "3 people walking at BC, 8s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l015",
+     "from": "e003",
+     "to": "e008",
+     "score": 0.57,
+     "dt": 27.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 27s after 2 people lingering at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l016",
+     "from": "e004",
+     "to": "e005",
+     "score": 0.83,
+     "dt": 3.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "1 person changing path at BC near the bench, 3s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l017",
+     "from": "e004",
+     "to": "e006",
+     "score": 0.559,
+     "dt": 9.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people sitting at BL near the bench, 9s after 3 people walking at BC.",
+     "is_causal": false
+    },
+    {
+     "id": "l018",
+     "from": "e005",
+     "to": "e006",
+     "score": 0.61,
+     "dt": 6.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "2 people sitting at BL near the bench, 6s after 1 person changing path at BC near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l019",
+     "from": "e005",
+     "to": "e007",
+     "score": 0.528,
+     "dt": 11.0,
+     "zone_rel": "adjacent",
+     "type": "co-occurs",
+     "rationale": "1 person sitting at BL near the bench, 11s after 1 person changing path at BC near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l020",
+     "from": "e006",
+     "to": "e007",
+     "score": 0.749,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "1 person sitting at BL near the bench, 5s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l021",
+     "from": "e006",
+     "to": "e008",
+     "score": 0.663,
+     "dt": 10.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 10s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l022",
+     "from": "e006",
+     "to": "e009",
+     "score": 0.634,
+     "dt": 12.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 12s after 2 people sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l023",
+     "from": "e007",
+     "to": "e008",
+     "score": 0.749,
+     "dt": 5.0,
+     "zone_rel": "same",
+     "type": "co-occurs",
+     "rationale": "A bus arriving at BL near the bus stop, 5s after 1 person sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l024",
+     "from": "e007",
+     "to": "e009",
+     "score": 0.712,
+     "dt": 7.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 7s after 1 person sitting at BL near the bench.",
+     "is_causal": false
+    },
+    {
+     "id": "l025",
+     "from": "e008",
+     "to": "e009",
+     "score": 0.952,
+     "dt": 2.0,
+     "zone_rel": "same",
+     "type": "attracts",
+     "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+     "is_causal": false
+    }
+   ],
+   "critical": [
+    "e003",
+    "e006",
+    "e001",
+    "e002",
+    "e005"
+   ],
+   "selected_link": "l007",
+   "evidence": [
+    {
+     "segment_id": "cam3_s00",
+     "camera_id": "sf_streets_cam-3",
+     "caption": "Day. [t=2s] 2 sitting, BL, group, near bench. [t=6s] 1 stops, BL, near bench.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam3_s00"
+    },
+    {
+     "segment_id": "cam3_s01",
+     "camera_id": "sf_streets_cam-3",
+     "caption": "Day. [t=1s] 1 sitting, BL, near bench. [t=5s] 2 lingering, BL, group, near bench.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam3_s01"
+    },
+    {
+     "segment_id": "cam3_s02",
+     "camera_id": "sf_streets_cam-3",
+     "caption": "Day. [t=3s] 3 walking, BC. [t=6s] 1 path change, BC, near bench, detour.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam3_s02"
+    },
+    {
+     "segment_id": "cam3_s03",
+     "camera_id": "sf_streets_cam-3",
+     "caption": "Night. [t=2s] 2 sitting, BL, group, near bench. [t=7s] 1 sitting, BL, near bench.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam3_s03"
+    },
+    {
+     "segment_id": "cam3_s04",
+     "camera_id": "sf_streets_cam-3",
+     "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 2 standing, BL, group, near bus stop.",
+     "match": "same_space",
+     "clip_url": "/app/api/clip/cam3_s04"
+    },
+    {
+     "segment_id": "20261001_094101_sf1_chunk_0000_segment_002_of_006",
+     "camera_id": "sf_streets_cam-1",
+     "caption": "The scene shows a busy urban intersection with multiple vehicles and pedestrians. A red SUV and a silver sedan are seen turning at the intersection, while other cars, including a white sedan and a white SUV, are either waiting or moving through the area. A bus is visible in the background, and a truck with \"Sysco\" written on its side is parked near the corner. Several people are walking on the sidewalks and crossing the street, with some standing near the crosswalks. Traffic lights and street signs are clearly visible, indicating a well-regulated intersection. The presence of a bench, a fire hydrant, and a parking meter adds to the urban setting. The overall atmosphere is one of typical city activity with no apparent anomalies or safety concerns.",
+     "match": "similar_space",
+     "clip_url": "/app/api/clip/20261001_094101_sf1_chunk_0000_segment_002_of_006"
+    },
+    {
+     "segment_id": "20261001_094358_sf1_chunk_0007_segment_006_of_006",
+     "camera_id": "sf_streets_cam-1",
+     "caption": "A person wearing a backpack is walking across the crosswalk in the foreground, moving from left to right. Another individual in a gray shirt and black pants is also crossing the street, heading toward the camera. A person in a bright yellow shirt briefly enters the frame from the bottom right, walking past the parked vehicles. In the background, several pedestrians are crossing the street in various directions, some walking in groups and others alone. A few people are standing near the crosswalk, waiting to cross. A black SUV is parked on the right side of the street, partially blocking the view of the crosswalk. A dark-colored sedan is also parked nearby. A bus is visible in the distance, moving along the street. A bicycle is parked on the sidewalk near the crosswalk. A bench is located on the sidewalk, near the crosswalk. A parking meter is visible on the sidewalk, near the crosswalk. A traffic light is visible at the intersection, showing a red signal for vehicles.",
+     "match": "similar_space",
+     "clip_url": "/app/api/clip/20261001_094358_sf1_chunk_0007_segment_006_of_006"
+    },
+    {
+     "segment_id": "20261001_080614_2025_test_Warehouse_017_Camera_02_chunk_0000_segment_003_of_006",
+     "camera_id": "smartspace_cam-1",
+     "caption": "The scene takes place in a large warehouse with a gray floor and orange shelving units along the left wall. Several people and robots are present, moving around the space. On the left side, a person in a blue shirt and pink hard hat is walking near a robot with a light blue body. Another individual in a white outfit and orange hard hat is also visible near the shelving. In the center, a person in a purple hoodie is walking away from the camera, while another person in a white outfit and orange hard hat stands nearby. On the right side, a person in a white outfit and black pants is standing still, and a robot with a light blue body is walking towards the right edge of the frame. A small white robot is also visible near the right wall. In the background, a yellow forklift is parked near the right wall, and a bench is visible near the left wall. The overall activity appears to be a mix of human and robotic movement within the warehouse environment.",
+     "match": "similar_space",
+     "clip_url": "/app/api/clip/20261001_080614_2025_test_Warehouse_017_Camera_02_chunk_0000_segment_003_of_006"
+    },
+    {
+     "segment_id": "20261001_080730_2025_test_Warehouse_017_Camera_02_chunk_0003_segment_006_of_006",
+     "camera_id": "smartspace_cam-1",
+     "caption": "The scene takes place in a large, well-lit warehouse with a gray floor marked by white lines. On the left side, tall orange and gray shelving units hold stacked cardboard boxes. Several people are present, including workers in white uniforms and others wearing casual clothing such as a pink hard hat and a blue cap. Some individuals appear to be observing or interacting with each other, while others move around the space. A few robotic figures are also visible, standing or walking near the center and right side of the area. In the background, near the wall, there is a small bench and a person standing still. The overall activity suggests a mix of human and robotic presence in a logistics or storage environment.",
+     "match": "similar_space",
+     "clip_url": "/app/api/clip/20261001_080730_2025_test_Warehouse_017_Camera_02_chunk_0003_segment_006_of_006"
+    },
+    {
+     "segment_id": "20261001_065332_set04_video_chunk_0020_segment_001_of_006",
+     "camera_id": "pie_cam-3",
+     "caption": "The scene is a straight, single-lane, one-way residential street with parked cars lining both sides. The ego vehicle travels along this road, passing a 30 mph speed limit sign on the right. Pedestrians are visible on the right sidewalk, including a person walking a dog. On the left side, a fenced area contains a small park with people sitting on benches. A silver car is parked ahead in the lane, partially blocking the ego vehicle\u2019s path. No traffic lights or stop signs are visible. The weather is clear with a blue sky and scattered clouds.",
+     "match": "similar_space",
+     "clip_url": "/app/api/clip/20261001_065332_set04_video_chunk_0020_segment_001_of_006"
+    }
+   ],
+   "branches": [
+    {
+     "id": "b1",
+     "kind": "baseline",
+     "intervention": "No change",
+     "prediction": "People likely keep standing at BL near the bench in short stops; groups form and break up within a minute.",
+     "evidence": [
+      {
+       "segment_id": "cam3_s00",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s01",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s03",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s04",
+       "match": "same_space"
+      }
+     ],
+     "risk": "None added. Standing groups may keep spilling into the walking path.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "Standing cluster at BL"
+      },
+      {
+       "t": "+10m",
+       "state": "Short stops repeat"
+      },
+      {
+       "t": "+30m",
+       "state": "Same pattern, no place to sit"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    },
+    {
+     "id": "b2",
+     "kind": "intervention",
+     "intervention": "More seating at BL next to the existing bench",
+     "prediction": "In similar clips, stops near seating may turn into longer sitting and lingering at BL, with groups gathering beside them.",
+     "evidence": [
+      {
+       "segment_id": "cam3_s00",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s01",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s03",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s00",
+       "match": "same_space"
+      }
+     ],
+     "risk": "Keep at least 5 ft of clear path behind the bench for wheelchairs and strollers.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "First person sits"
+      },
+      {
+       "t": "+10m",
+       "state": "Others stop beside the bench"
+      },
+      {
+       "t": "+30m",
+       "state": "Longer stays, fewer people standing in the path"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    },
+    {
+     "id": "b3",
+     "kind": "intervention",
+     "intervention": "Pedestrian lighting over BL by the bench",
+     "prediction": "43% of stays at BL are at night. In similar clips, lit edges may keep night waits shorter and closer to the curb.",
+     "evidence": [
+      {
+       "segment_id": "cam3_s03",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s04",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s00",
+       "match": "same_space"
+      },
+      {
+       "segment_id": "cam3_s01",
+       "match": "same_space"
+      }
+     ],
+     "risk": "Glare into ground-floor windows; keep fixtures low and shielded.",
+     "timeline": [
+      {
+       "t": "+0m",
+       "state": "Night waits under light"
+      },
+      {
+       "t": "+10m",
+       "state": "Groups gather in the lit area"
+      },
+      {
+       "t": "+30m",
+       "state": "Night stays look like day stays"
+      }
+     ],
+     "plausibility_n": 4,
+     "label": "plausible, based on 4 clips"
+    }
+   ],
+   "recommendation": {
+    "zone": "BL",
+    "action": "More seating at BL next to the existing bench",
+    "why": "BL has the most standing and lingering on this camera (11 person-stops) and no seating. In similar clips, people stay longer where there is a place to sit.",
+    "segment_ids": [
+     "cam3_s00",
+     "cam3_s01",
+     "cam3_s03",
+     "cam3_s00"
+    ],
+    "n": 4,
+    "label": "plausible, based on 4 clips"
+   },
+   "zone_stats": {
+    "BL": 11
+   },
+   "light_stats": {
+    "BL": {
+     "day": 6,
+     "night": 5,
+     "unknown": 0
+    }
+   },
+   "trace": [
+    {
+     "step": "Plan searches",
+     "tool": "rules",
+     "summary": "6 queries: people standing on the sidewalk; people lingering near the bus stop; group of people stopped together; person sitting on a bench or ledge; people walking around an obstacle; people waiting to cross",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Search footage",
+     "tool": "local caption search",
+     "summary": "5 matching segments on sf_streets_cam-3",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Load moments",
+     "tool": "segments + YOLO zones",
+     "summary": "5 segments, 0s to 50s",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Extract events",
+     "tool": "caption parser",
+     "summary": "10 behavior events on a 3x3 zone grid",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Link events",
+     "tool": "timing + proximity score",
+     "summary": "26 links above 0.5, 4 between vehicles and people",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Split day and night",
+     "tool": "segment light",
+     "summary": "6 daytime stays, 5 night stays; most night stays at BL",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Find critical moves",
+     "tool": "link degree",
+     "ms": 1,
+     "mode": "ok",
+     "summary": "5 critical moves; selected l007: 2 people lingering at BL near the bench, 4s after 1 person sitting at BL near the bench."
+    },
+    {
+     "step": "Retrieve evidence",
+     "tool": "local caption search, all cameras",
+     "summary": "10 evidence segments across 4 cameras",
+     "ms": 41,
+     "mode": "ok"
+    },
+    {
+     "step": "Branch futures",
+     "tool": "templates",
+     "summary": "3 verified branches",
+     "ms": 0,
+     "mode": "ok"
+    },
+    {
+     "step": "Verify citations",
+     "tool": "code check",
+     "ms": 1,
+     "mode": "ok",
+     "summary": "every cited clip exists; N recomputed: b1=4, b2=4, b3=4"
+    },
+    {
+     "step": "Recommend",
+     "tool": "rules",
+     "summary": "More seating at BL next to the existing bench (plausible, based on 4 clips)",
+     "ms": 0,
+     "mode": "ok"
+    }
+   ],
+   "source": "segments.json"
+  }
+ }
+}

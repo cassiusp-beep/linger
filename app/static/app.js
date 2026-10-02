@@ -18,7 +18,7 @@ const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS,
 const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
 const clock = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
 const isVeh = (e) => e.actor === "vehicle";
-const camEvents = () => D.events.filter(e => e.camera_id === D.camera_id);
+const camEvents = () => (D.events || []).filter(e => e.camera_id === D.camera_id);
 
 /* ---------- plain-language naming ---------- */
 function nameZones() {
@@ -69,18 +69,23 @@ function stays(filter = light) {
 /* ---------- step 1: where people stop ---------- */
 function drawStreet() {
   const svg = $("#street"); svg.innerHTML = "";
+  const playing = $(".street")?.classList.contains("playing");
   const st = stays(), max = Math.max(1, ...Object.values(st));
   const hz = highlightZones();
   ZONES.forEach((z, i) => {
     const x = (i % 3) * 640 / 3, y = Math.floor(i / 3) * 120, w = 640 / 3, h = 120, v = (st[z] || 0) / max;
-    el("rect", {x, y, width: w, height: h, fill: "#E58A2E", "fill-opacity": (0.06 + 0.62 * v).toFixed(2)}, svg);
-    el("rect", {x: x + .5, y: y + .5, width: w - 1, height: h - 1, fill: "none", stroke: "#FFFFFF", "stroke-opacity": .35}, svg);
+    // When footage is on, keep zone tint light so the video shows through the 3x3 boxes.
+    const tint = playing ? (0.04 + 0.14 * v) : (0.06 + 0.62 * v);
+    el("rect", {class: "zonefill", x, y, width: w, height: h, fill: "#E58A2E", "fill-opacity": tint.toFixed(2)}, svg);
+    el("rect", {x: x + .5, y: y + .5, width: w - 1, height: h - 1, fill: "none", stroke: "#FFFFFF", "stroke-opacity": playing ? .55 : .35}, svg);
     if (hz.zones.has(z)) el("rect", {x: x + 3, y: y + 3, width: w - 6, height: h - 6, rx: 6, fill: "none", stroke: "#FFFFFF", "stroke-width": 4}, svg);
     const label = ZFEAT[z] ? cap(ZFEAT[z]) : "";
     if (label) {
-      const t = el("text", {x: x + 12, y: y + 24, fill: "#FFFFFF", "font-size": 15, "font-weight": 700}, svg); t.textContent = label;
+      const t = el("text", {x: x + 12, y: y + 24, fill: "#FFFFFF", "font-size": 15, "font-weight": 700,
+        "paint-order": "stroke", stroke: "rgba(0,0,0,.55)", "stroke-width": 3}, svg); t.textContent = label;
     }
-    if (st[z]) { const c = el("text", {x: x + w - 12, y: y + h - 12, fill: "#FFFFFF", "font-size": 14, "font-weight": 800, "text-anchor": "end"}, svg);
+    if (st[z]) { const c = el("text", {x: x + w - 12, y: y + h - 12, fill: "#FFFFFF", "font-size": 14, "font-weight": 800, "text-anchor": "end",
+      "paint-order": "stroke", stroke: "rgba(0,0,0,.55)", "stroke-width": 3}, svg);
       c.textContent = `${st[z]} ${st[z] === 1 ? "stop" : "stops"}`; }
   });
   hz.events.forEach((e, j) => {
@@ -114,22 +119,32 @@ function drawRank() {
   if (rows.length) {
     const [z, n] = rows[0], nn = stays("night")[z] || 0, all = stays("all")[z] || 0;
     const when = light === "all" ? "" : light === "night" ? " at night" : " in the daytime";
+    const nightPct = all ? Math.round(nn / all * 100) : 0;
     $("#s1lede").textContent = `Most stopping${when} happens at ${ZNAME[z]}: ${n} of ${total} stops.` +
-      (light === "all" && all ? ` ${Math.round(nn / all * 100)}% of those are at night.` : "");
+      (light === "all" && nightPct > 0 ? ` ${nightPct}% of those are at night.` : "");
+  } else {
+    $("#s1lede").textContent = "No stops found on this camera yet.";
   }
 }
 
 /* ---------- step 2: what tends to happen next ---------- */
 function keyPairs() {
-  const L = D.links, pick = [], usedZ = new Set();
-  const add = (l) => { if (l && !pick.includes(l)) { pick.push(l); usedZ.add(byEv[l.from].zone + byEv[l.to].zone); } };
+  const L = D.links || [], pick = [], usedZ = new Set();
+  if (!L.length) return pick;
+  const add = (l) => { if (l && byEv[l.from] && byEv[l.to] && !pick.includes(l)) { pick.push(l); usedZ.add(byEv[l.from].zone + byEv[l.to].zone); } };
   add(L.find(l => l.id === D.selected_link));
-  add([...L].filter(l => isVeh(byEv[l.from]) && byEv[l.to].behavior === "path_change").sort((a, b) => b.score - a.score)[0]);
-  add([...L].filter(l => STAY.has(byEv[l.from].behavior) && STAY.has(byEv[l.to].behavior) && !usedZ.has(byEv[l.from].zone + byEv[l.to].zone))
+  add([...L].filter(l => byEv[l.from] && byEv[l.to] && isVeh(byEv[l.from]) && byEv[l.to].behavior === "path_change").sort((a, b) => b.score - a.score)[0]);
+  add([...L].filter(l => byEv[l.from] && byEv[l.to] && STAY.has(byEv[l.from].behavior) && STAY.has(byEv[l.to].behavior) && !usedZ.has(byEv[l.from].zone + byEv[l.to].zone))
     .sort((a, b) => b.score - a.score)[0]);
   return pick.slice(0, 3);
 }
 function drawPairs() {
+  if (!(D.links || []).length) {
+    $("#s2lede").textContent = "Not enough connected moments here yet to show a pattern.";
+    $("#pairs").innerHTML = "";
+    return;
+  }
+  $("#s2lede").textContent = "Moments that happen close together, in the same spot. These are patterns, not proof that one thing caused the other.";
   $("#pairs").innerHTML = keyPairs().map(l => {
     const a = byEv[l.from], b = byEv[l.to];
     const where = l.zone_rel === "same" ? "Same spot" : "Next to each other";
@@ -143,7 +158,8 @@ function drawPairs() {
 function drawTimeline(animate = false) {
   const svg = $("#lg"); svg.innerHTML = "";
   const ev = camEvents(), idx = Object.fromEntries(ev.map((e, i) => [e.id, i]));
-  const all = D.links.filter(l => l.from in idx && l.to in idx);
+  if (!ev.length) { svg.setAttribute("viewBox", "0 0 400 220"); svg.style.width = "100%"; return; }
+  const all = (D.links || []).filter(l => l.from in idx && l.to in idx);
   const keep = new Set([...all].sort((a, b) => b.score - a.score).slice(0, 16).map(l => l.id));
   keyPairs().forEach(l => keep.add(l.id)); if (sel.kind === "link") keep.add(sel.id);
   const links = showAll ? all : all.filter(l => keep.has(l.id));
@@ -201,7 +217,12 @@ function drawTimeline(animate = false) {
 /* ---------- step 3: what could change ---------- */
 const WHEN = {"+0m": "Right away", "+10m": "After 10 min", "+30m": "After 30 min"};
 function drawOptions() {
-  const l = D.links.find(x => x.id === D.selected_link);
+  if (!(D.branches || []).length) {
+    $("#s3lede").textContent = "Linger only suggests changes it can back with at least 2 clips. This place doesn't have enough yet.";
+    $("#options").innerHTML = "";
+    return;
+  }
+  const l = (D.links || []).find(x => x.id === D.selected_link);
   $("#s3lede").textContent = l ? `Starting from the pattern "${say(byEv[l.from])}, then ${say(byEv[l.to]).toLowerCase()}", Linger imagines what happens next under each option. Each one shows how many real clips back it up.` : "";
   $("#options").innerHTML = D.branches.map(br => `
     <button class="opt ${br.kind === "baseline" ? "base" : ""} ${sel.kind === "branch" && sel.id === br.id ? "on" : ""}" data-branch="${br.id}">
@@ -225,15 +246,22 @@ function drawRec() {
 }
 
 /* ---------- details panel ---------- */
+function clipHref(url) {
+  if (!url) return null;
+  if (/^https?:\/\//i.test(url) || url.startsWith("/")) return url;
+  return "/app/" + url.replace(/^\.\//, "");
+}
 function clipList(items) {
   return items.map(c => {
     const s = bySeg[c.segment_id] || {};
+    const href = clipHref(s.clip_url);
     const lines = (s.caption || "").match(/\[t=\d+(?:\.\d+)?s\][^\[]+/g) || [];
     const same = c.match !== "similar_space";
-    return `<div class="clip"><div class="ch"><strong>Clip ${esc(c.segment_id)}</strong>
+    return `<div class="clip" data-seg="${esc(c.segment_id)}"><div class="ch"><strong>Clip ${esc(c.segment_id)}</strong>
       <span class="where ${same ? "same" : "similar"}">${same ? "This camera" : "Similar street"}</span></div>
       <ul>${clipLines(c.segment_id, lines)}</ul>
-      <button data-play="${esc(c.segment_id)}">${s.clip_url ? "Play clip" : "Show on the street view"}</button></div>`;
+      <button type="button" data-play="${esc(c.segment_id)}">${href ? "Play clip" : "Show on the street view"}</button>
+      ${href ? `<video class="clipvid" controls playsinline muted loop preload="none"></video>` : ""}</div>`;
   }).join("");
 }
 function clipLines(id, raw) {
@@ -276,14 +304,63 @@ function drawDetail() {
     box.innerHTML = `<h3>Details</h3><p class="empty">Click any area, pattern, moment or option to see the details and the video behind it.</p>`;
   }
   box.querySelectorAll("[data-play]").forEach(b => b.onclick = () => play(b.dataset.play));
+  document.querySelectorAll(".clipvid").forEach(v => { v.style.display = "none"; });
 }
 function play(id) {
-  const s = bySeg[id], v = $("#clip");
-  if (s && s.clip_url) { if (v.getAttribute("src") !== s.clip_url) v.src = s.clip_url; v.currentTime = 0; v.classList.add("on"); v.play().catch(() => {}); }
-  else v.classList.remove("on");
+  const s = bySeg[id] || {};
+  const href = clipHref(s.clip_url);
+  const streetV = $("#clip");
+  const street = $(".street");
+  const wrap = $(".streetwrap");
+
+  document.querySelectorAll(".clip button[data-play]").forEach(b => b.classList.toggle("on", b.dataset.play === id));
+  document.querySelectorAll(".clipvid").forEach(v => {
+    if (v.closest(".clip")?.dataset.seg !== id) {
+      v.pause();
+      v.removeAttribute("src");
+      v.load();
+      v.style.display = "none";
+    }
+  });
+
+  const card = document.querySelector(`.clip[data-seg="${CSS.escape(id)}"]`);
+  const inline = card && card.querySelector(".clipvid");
+
   sel = {kind: sel.kind, id: sel.id, seg: id};
-  drawStreet();
-  $("#s1").scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "start"});
+
+  if (href && streetV) {
+    street.classList.add("playing");
+    wrap?.classList.add("playing");
+    streetV.classList.add("on");
+    streetV.muted = true;
+    streetV.loop = true;
+    streetV.playsInline = true;
+    const start = () => {
+      streetV.play().catch((e) => console.warn("street clip play failed", id, e));
+    };
+    if (streetV.getAttribute("src") !== href) {
+      streetV.src = href;
+      streetV.load();
+      streetV.addEventListener("loadeddata", start, { once: true });
+    } else {
+      start();
+    }
+    drawStreet();
+    $("#s1").scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "start"});
+    if (inline) {
+      inline.style.display = "block";
+      if (inline.getAttribute("src") !== href) { inline.src = href; inline.load(); }
+      inline.muted = true;
+      inline.loop = true;
+      inline.play().catch(() => {});
+    }
+  } else {
+    streetV?.classList.remove("on");
+    street?.classList.remove("playing");
+    wrap?.classList.remove("playing");
+    if (streetV) { streetV.removeAttribute("src"); streetV.load(); }
+    drawStreet();
+  }
 }
 function highlightZones() {
   let evs = [];
@@ -321,32 +398,145 @@ document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
   drawStreet(); drawRank();
 });
 $("#allLinks").onchange = (e) => { showAll = e.target.checked; drawTimeline(); };
-addEventListener("resize", () => D && drawTimeline());
+addEventListener("resize", () => D && $("#placeView") && !$("#placeView").hidden && drawTimeline());
+
+let LIB = null, PLACE_META = {};
+
+function miniHeat(zones) {
+  const max = Math.max(1, ...ZONES.map(z => zones[z] || 0));
+  return `<svg class="miniheat" viewBox="0 0 90 90" aria-hidden="true">${ZONES.map((z, i) => {
+    const x = (i % 3) * 30, y = Math.floor(i / 3) * 30, v = (zones[z] || 0) / max;
+    return `<rect x="${x+1}" y="${y+1}" width="28" height="28" rx="3" fill="#E58A2E" fill-opacity="${(0.08 + 0.7 * v).toFixed(2)}"/>`;
+  }).join("")}</svg>`;
+}
+function placeLabel(c) { return `${c.place}, camera ${c.camera_n}`; }
+function cardHeadline(c) {
+  const feat = c.top_feature ? `the ${c.top_feature}` : (c.top_zone ? POS[c.top_zone] : "the view");
+  let t = `${c.stops} stop${c.stops === 1 ? "" : "s"}, most at ${feat}.`;
+  if ((c.night_share || 0) >= 0.3) t += ` ${Math.round(c.night_share * 100)}% of it at night.`;
+  return t;
+}
+function renderLibrary() {
+  $("#libraryView").hidden = false;
+  $("#placeView").hidden = true;
+  $("#askForm").hidden = true;
+  $("#howBtn").hidden = true;
+  const mock = (LIB.source || "").startsWith("mock");
+  $("#libSub").textContent = "Linger read every clip in the VAST library and ranked the places where people stop and wait. Pick a place to see what happens there and what could change."
+    + (mock ? " (Showing practice data.)" : "");
+  const stops = (LIB.cameras || []).reduce((a, c) => a + (c.stops || 0), 0);
+  $("#libStats").innerHTML = [
+    ["Clips scanned", LIB.total_clips],
+    ["Cameras in the library", LIB.total_cameras],
+    ["Places analyzed", LIB.analyzed_cameras],
+    ["Stops found", stops],
+  ].map(([k, v]) => `<div class="stat"><span class="sv">${esc(v)}</span><span class="sk">${esc(k)}</span></div>`).join("");
+  const ranked = (LIB.cameras || []).filter(c => c.analyzed);
+  const other = (LIB.cameras || []).filter(c => !c.analyzed);
+  $("#libCards").innerHTML = ranked.map(c => {
+    const tags = [];
+    if (c.groups) tags.push(`${c.groups} group${c.groups === 1 ? "" : "s"}`);
+    if (c.buses) tags.push(c.buses === 1 ? "1 bus arrival" : `${c.buses} bus arrivals`);
+    if ((c.night_share || 0) >= 0.3) tags.push(`${Math.round(c.night_share * 100)}% at night`);
+    return `<a class="place-card ${c.rank === 1 ? "top" : ""}" href="#/place/${encodeURIComponent(c.camera_id)}">
+      <div class="pc-top"><span class="rankpill">#${c.rank}</span>${c.rank === 1 ? `<span class="opp">Biggest opportunity</span>` : ""}</div>
+      <h3>${esc(placeLabel(c))}</h3>
+      <p class="pc-meta">${esc(c.camera_id)} · ${c.clips} clip${c.clips === 1 ? "" : "s"}</p>
+      <p class="pc-head">${esc(cardHeadline(c))}</p>
+      ${miniHeat(c.zones || {})}
+      <div class="tags">${tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      <span class="explore">Explore this place</span>
+    </a>`;
+  }).join("") || `<p class="empty">No places are analyzed yet. Re-ingest with the Linger prompt to rank stops.</p>`;
+  $("#libAlso").innerHTML = other.map(c =>
+    `<li><strong>${esc(placeLabel(c))}</strong> <span class="pc-meta">${c.clips} clips</span><br><span class="why">${esc(c.reason || "")}</span></li>`
+  ).join("") || `<li class="empty">Every camera in the library was analyzed.</li>`;
+}
+
+async function loadLibrary() {
+  try {
+    const r = await fetch("api/library");
+    if (!r.ok) throw 0;
+    LIB = await r.json();
+  } catch {
+    LIB = (window.LINGER_LIBRARY && window.LINGER_LIBRARY.library) || window.LINGER_LIBRARY || {
+      cameras: [], total_clips: 0, total_cameras: 0, analyzed_cameras: 0, source: "mock_segments.json"
+    };
+    if (window.LINGER_LIBRARY && window.LINGER_LIBRARY.library) LIB = { ...window.LINGER_LIBRARY.library };
+  }
+  PLACE_META = Object.fromEntries((LIB.cameras || []).map(c => [c.camera_id, c]));
+}
+
+async function loadCamera(cameraId) {
+  try {
+    const r = await fetch("api/camera/" + encodeURIComponent(cameraId));
+    if (!r.ok) throw 0;
+    return await r.json();
+  } catch {
+    const runs = (window.LINGER_LIBRARY && window.LINGER_LIBRARY.runs) || {};
+    return runs[cameraId] || window.LINGER_CACHE;
+  }
+}
 
 function render(animate) {
   index();
+  D.events = D.events || [];
+  D.links = D.links || [];
+  D.branches = D.branches || [];
+  D.segments = D.segments || [];
+  D.trace = D.trace || [];
   const n = camEvents().length, mock = (D.source || "").startsWith("mock");
   $("#meta").textContent = `Camera ${D.camera_id}, ${n} moments, ${D.links.length} connections${mock ? ", practice data" : ""}`;
+  const meta = PLACE_META[D.camera_id];
+  $("#crumb").innerHTML = `<a href="#/">All places</a> / <span>${esc(meta ? placeLabel(meta) : D.camera_id)}</span>`;
   drawStreet(); drawRank(); drawPairs(); drawTimeline(animate); drawOptions(); drawRec(); drawDetail();
   $("#trace").innerHTML = traceHTML(D.trace);
 }
+
+async function showPlace(cameraId) {
+  $("#libraryView").hidden = true;
+  $("#placeView").hidden = false;
+  $("#askForm").hidden = false;
+  $("#howBtn").hidden = false;
+  D = await loadCamera(cameraId);
+  if (!D) { $("#detail").innerHTML = `<p class="empty">No results for this camera yet.</p>`; return; }
+  sel = {kind: null, id: null}; light = "all"; showAll = false;
+  render(false);
+}
+
 $("#askForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  if ($("#placeView").hidden) return;
   const btn = $("#askBtn"); btn.disabled = true; btn.textContent = "Working...";
   setHow(true); $("#trace").innerHTML = `<li><span class="dot">1</span><span class="t">Planning searches</span></li>`;
   document.querySelectorAll(".banner").forEach(b => b.remove());
   let res;
-  try { const r = await fetch("api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
+  try {
+    const r = await fetch("api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({question: $("#q").value, camera_id: D && D.camera_id})});
-    if (!r.ok) throw 0; res = await r.json(); }
-  catch { res = Object.assign({}, window.LINGER_CACHE, {fallback: true}); }
+    if (!r.ok) throw 0; res = await r.json();
+  } catch { res = Object.assign({}, D || window.LINGER_CACHE, {fallback: true}); }
   D = res; sel = {kind: null, id: null}; index();
-  await replay(D.trace);
+  await replay(D.trace || []);
   render(true);
   btn.disabled = false; btn.textContent = "Ask Linger";
 });
+document.querySelectorAll("#chips button").forEach(b => b.onclick = () => {
+  $("#q").value = b.dataset.q;
+  $("#askForm").requestSubmit();
+});
+
+async function route() {
+  const h = location.hash || "#/";
+  const m = h.match(/^#\/place\/(.+)$/);
+  if (m) await showPlace(decodeURIComponent(m[1]));
+  else {
+    if (!LIB) await loadLibrary();
+    renderLibrary();
+  }
+}
+addEventListener("hashchange", () => route());
 (async () => {
-  D = await load();
-  if (!D) { $("#detail").innerHTML = `<p class="empty">No results yet. Run make cache-rules, then reload this page.</p>`; return; }
-  render(false);
+  await loadLibrary();
+  await route();
 })();

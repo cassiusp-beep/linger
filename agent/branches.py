@@ -36,10 +36,12 @@ def gather_evidence(a, b, segments, events, search_fn, cam):
         "bus arrives at the stop",
     ]
     ids = []
-    for q in queries:
-        for sid in search_fn(q, segments, None, 4):
-            if sid not in ids:
-                ids.append(sid)
+    # Prefer this camera's clips so citations map to the moments on the place page.
+    for scope in (cam, None):
+        for q in queries:
+            for sid in search_fn(q, segments, scope, 4):
+                if sid not in ids:
+                    ids.append(sid)
     seg_by = {s["segment_id"]: s for s in segments}
     return [{"segment_id": sid, "camera_id": seg_by[sid]["camera_id"],
              "caption": seg_by[sid]["caption"],
@@ -91,13 +93,25 @@ def template_branches(link, a, b, events, evidence):
                  "evidence": cite(detours + blocks), "risk": "Does not add seating; the stopping pattern likely stays the same.",
                  "timeline": [{"t": "+0m", "state": "Straight path through BC"}, {"t": "+10m", "state": "Fewer slowdowns"},
                               {"t": "+30m", "state": "Flow steadier, no new places to stay"}]}
+    feat = (near or "").lower()
+    has_crosswalk = any(e.get("near") == "crosswalk" or e["behavior"] == "crosswalk_block"
+                        for e in events if e["camera_id"] == cam)
+    if feat in ("bench", "seat", "ledge"):
+        seating = f"More seating at {zone} next to the existing {near}"
+    elif has_crosswalk and feat != "crosswalk":
+        seating = f"Bench at {zone} beside the {near}, facing the crosswalk"
+    elif feat == "crosswalk":
+        seating = f"Bench at {zone} beside the {near}, facing the street"
+    else:
+        seating = f"Bench at {zone} beside the {near}, facing the walkway"
+
     return [
         {"id": "b1", "kind": "baseline", "intervention": "No change",
          "prediction": f"People likely keep standing at {zone} near the {near} in short stops; groups form and break up within a minute.",
          "evidence": cite(stay_here), "risk": "None added. Standing groups may keep spilling into the walking path.",
          "timeline": [{"t": "+0m", "state": f"Standing cluster at {zone}"}, {"t": "+10m", "state": "Short stops repeat"},
                       {"t": "+30m", "state": "Same pattern, no place to sit"}]},
-        {"id": "b2", "kind": "intervention", "intervention": f"Bench at {zone} beside the {near}, facing the crosswalk",
+        {"id": "b2", "kind": "intervention", "intervention": seating,
          "prediction": f"In similar clips, stops near seating may turn into longer sitting and lingering at {zone}, with groups gathering beside them.",
          "evidence": cite(sitting + stay_here), "risk": "Keep at least 5 ft of clear path behind the bench for wheelchairs and strollers.",
          "timeline": [{"t": "+0m", "state": "First person sits"}, {"t": "+10m", "state": "Others stop beside the bench"},
@@ -149,7 +163,8 @@ def zone_stats(events, cam):
 
 
 def template_recommendation(branches, stats, b):
-    pick = next((br for br in branches if br["kind"] == "intervention" and "Bench" in br["intervention"]), None) \
+    pick = next((br for br in branches if br["kind"] == "intervention"
+                 and ("Bench" in br["intervention"] or "seating" in br["intervention"].lower())), None) \
         or next((br for br in branches if br["kind"] == "intervention"), None)
     if not pick:
         return None

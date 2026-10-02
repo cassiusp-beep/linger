@@ -32,7 +32,13 @@ def _segments():
 
 SEGS = _segments()
 SEG_IDS = {s["segment_id"] for s in SEGS}
-CAM = max({s["camera_id"] for s in SEGS}, key=lambda c: sum(1 for s in SEGS if s["camera_id"] == c))
+from agent.library import summarize  # noqa: E402
+_lib = summarize(SEGS)
+_ranked = [c["camera_id"] for c in _lib["cameras"] if c["analyzed"]]
+CAM = _ranked[0] if _ranked else max(
+    {s["camera_id"] for s in SEGS},
+    key=lambda c: sum(1 for s in SEGS if s["camera_id"] == c),
+)
 
 
 def _texts(out):

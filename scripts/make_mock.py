@@ -30,7 +30,8 @@ other = [
 segs = []
 for cam, rows, pre, vid in ((HERO, hero, "cam2", "sf-streets/2"), (OTHER, other, "cam3", "sf-streets/3")):
     for i, (light, cap) in enumerate(rows):
-        segs.append({"segment_id": f"{pre}_s{i:02d}", "video_id": vid, "camera_id": cam, "offset": i * 10,
+        segs.append({"segment_id": f"{pre}_s{i:02d}", "video_id": vid, "camera_id": cam,
+                     "location": "san_francisco", "offset": i * 10,
                      "t0": 0, "t1": 10, "light": light, "caption": cap, "clip_url": None})
 out = pathlib.Path(__file__).resolve().parents[1] / "data" / "mock_segments.json"
 out.write_text(json.dumps(segs, indent=1))

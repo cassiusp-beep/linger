@@ -1,105 +1,98 @@
 {
  "question": "Where should seating go on this block?",
  "camera_id": "sf_streets_cam-2",
- "mode": "llm",
+ "mode": "rules",
  "segments": [
   {
    "segment_id": "cam2_s00",
    "camera_id": "sf_streets_cam-2",
    "offset": 0,
    "caption": "Day. [t=1s] 3 walking, BC. [t=4s] 1 stops, BL, near bus stop. [t=8s] 1 lingering, BL, near bus stop.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s00"
   },
   {
    "segment_id": "cam2_s01",
    "camera_id": "sf_streets_cam-2",
    "offset": 10,
    "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 4 walking, BC. [t=7s] 1 path change, BC, near bus stop, detour.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s01"
   },
   {
    "segment_id": "cam2_s02",
    "camera_id": "sf_streets_cam-2",
    "offset": 20,
    "caption": "Day. [t=3s] 3 standing, BL, group, near bus stop. [t=5s] car blocks the crosswalk, BR, near crosswalk. [t=7s] 2 waiting to cross, BR, near crosswalk.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s02"
   },
   {
    "segment_id": "cam2_s03",
    "camera_id": "sf_streets_cam-2",
    "offset": 30,
    "caption": "Day. [t=1s] 1 sitting, ML, near ledge. [t=4s] 1 stops, ML, near ledge. [t=9s] 2 walking, BC.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s03"
   },
   {
    "segment_id": "cam2_s04",
    "camera_id": "sf_streets_cam-2",
    "offset": 40,
    "caption": "Day. [t=2s] 2 lingering, ML, group, near ledge. [t=6s] 1 path change, BC, near pole, slowdown.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s04"
   },
   {
    "segment_id": "cam2_s05",
    "camera_id": "sf_streets_cam-2",
    "offset": 50,
    "caption": "Day. [t=0s] 5 walking, BC. [t=3s] 3 waiting to cross, BR, group, near crosswalk. [t=8s] 1 stops, BL, near bus stop.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s05"
   },
   {
    "segment_id": "cam2_s06",
    "camera_id": "sf_streets_cam-2",
    "offset": 60,
    "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 1 path change, BC, near bus stop, detour.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s06"
   },
   {
    "segment_id": "cam2_s07",
    "camera_id": "sf_streets_cam-2",
    "offset": 70,
    "caption": "Day. [t=3s] 1 sitting, ML, near ledge. [t=6s] 1 lingering, MR, near tree.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s07"
   },
   {
    "segment_id": "cam2_s08",
    "camera_id": "sf_streets_cam-2",
    "offset": 80,
    "caption": "Night. [t=1s] 2 standing, BL, group, near bus stop. [t=4s] 1 lingering, BL, near bus stop. [t=7s] 2 walking, BR.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s08"
   },
   {
    "segment_id": "cam2_s09",
    "camera_id": "sf_streets_cam-2",
    "offset": 90,
    "caption": "Night. [t=2s] 1 lingering, BL, near bus stop. [t=5s] 2 standing, BL, group, near bus stop. [t=8s] 1 path change, C, near pole, detour.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s09"
   },
   {
    "segment_id": "cam2_s10",
    "camera_id": "sf_streets_cam-2",
    "offset": 100,
    "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 3 standing, BL, group, near bus stop. [t=8s] 1 standing, TC, near storefront.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s10"
   },
   {
    "segment_id": "cam2_s11",
    "camera_id": "sf_streets_cam-2",
    "offset": 110,
    "caption": "Night. [t=1s] 1 lingering, BL, near bus stop. [t=4s] 2 waiting to cross, BR, near crosswalk. [t=7s] car blocks the crosswalk, BR, near crosswalk. [t=9s] 1 path change, BR, near crosswalk, detour.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s11"
   },
   {
    "segment_id": "cam2_s12",
    "camera_id": "sf_streets_cam-2",
    "offset": 120,
    "caption": "Night. [t=3s] 2 stops, TC, group, near storefront. [t=6s] 1 lingering, BL, near bus stop.",
-   "clip_url": null
-  },
-  {
-   "segment_id": "cam3_s02",
-   "camera_id": "sf_streets_cam-3",
-   "offset": 20,
-   "caption": "Day. [t=3s] 3 walking, BC. [t=6s] 1 path change, BC, near bench, detour.",
-   "clip_url": null
+   "clip_url": "/app/api/clip/cam2_s12"
   }
  ],
  "events": [
@@ -851,8 +844,8 @@
    "score": 0.889,
    "dt": 4.0,
    "zone_rel": "same",
-   "type": "co-occurs",
-   "rationale": "A person stopped and another person lingered near the bus stop.",
+   "type": "attracts",
+   "rationale": "1 person lingering at BL near the bus stop, 4s after 1 person stopping at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -917,8 +910,8 @@
    "score": 0.87,
    "dt": 3.0,
    "zone_rel": "same",
-   "type": "follows",
-   "rationale": "A person lingered near the bus stop, followed by a bus arriving.",
+   "type": "co-occurs",
+   "rationale": "A bus arriving at BL near the bus stop, 3s after 1 person lingering at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -928,8 +921,8 @@
    "score": 0.869,
    "dt": 5.0,
    "zone_rel": "same",
-   "type": "follows",
-   "rationale": "A person lingered near the bus stop, followed by a person standing.",
+   "type": "attracts",
+   "rationale": "2 people standing at BL near the bus stop, 5s after 1 person lingering at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -984,7 +977,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "The bus arrived near the bus stop, followed by a person standing.",
+   "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -1082,8 +1075,8 @@
    "score": 0.852,
    "dt": 2.0,
    "zone_rel": "same",
-   "type": "follows",
-   "rationale": "A person walked and then changed path near the bus stop.",
+   "type": "co-occurs",
+   "rationale": "1 person changing path at BC near the bus stop, 2s after 4 people walking at BC.",
    "is_causal": false
   },
   {
@@ -1225,8 +1218,8 @@
    "score": 0.912,
    "dt": 2.0,
    "zone_rel": "same",
-   "type": "blocks",
-   "rationale": "A vehicle blocked the crosswalk, followed by a person standing.",
+   "type": "co-occurs",
+   "rationale": "2 people standing at BR near the crosswalk, 2s after a car blocking the crosswalk at BR near the crosswalk.",
    "is_causal": false
   },
   {
@@ -1567,7 +1560,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "The bus arrived near the bus stop, followed by a person standing.",
+   "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -1753,8 +1746,8 @@
    "score": 0.89,
    "dt": 3.0,
    "zone_rel": "same",
-   "type": "co-occurs",
-   "rationale": "Two people stood near the bus stop.",
+   "type": "attracts",
+   "rationale": "1 person lingering at BL near the bus stop, 3s after 2 people standing at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -1874,8 +1867,8 @@
    "score": 0.91,
    "dt": 3.0,
    "zone_rel": "same",
-   "type": "co-occurs",
-   "rationale": "Two people lingered near the bus stop.",
+   "type": "attracts",
+   "rationale": "2 people standing at BL near the bus stop, 3s after 1 person lingering at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -1974,7 +1967,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "The bus arrived near the bus stop, followed by a person standing.",
+   "rationale": "3 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
    "is_causal": false
   },
   {
@@ -2073,7 +2066,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "blocks",
-   "rationale": "A vehicle blocked the crosswalk, followed by a person changing path.",
+   "rationale": "1 person changing path at BR near the crosswalk, 2s after a car blocking the crosswalk at BR near the crosswalk.",
    "is_causal": false
   }
  ],
@@ -2090,61 +2083,71 @@
    "segment_id": "cam2_s00",
    "camera_id": "sf_streets_cam-2",
    "caption": "Day. [t=1s] 3 walking, BC. [t=4s] 1 stops, BL, near bus stop. [t=8s] 1 lingering, BL, near bus stop.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s00"
   },
   {
    "segment_id": "cam2_s08",
    "camera_id": "sf_streets_cam-2",
    "caption": "Night. [t=1s] 2 standing, BL, group, near bus stop. [t=4s] 1 lingering, BL, near bus stop. [t=7s] 2 walking, BR.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s08"
   },
   {
    "segment_id": "cam2_s09",
    "camera_id": "sf_streets_cam-2",
    "caption": "Night. [t=2s] 1 lingering, BL, near bus stop. [t=5s] 2 standing, BL, group, near bus stop. [t=8s] 1 path change, C, near pole, detour.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s09"
   },
   {
    "segment_id": "cam2_s12",
    "camera_id": "sf_streets_cam-2",
    "caption": "Night. [t=3s] 2 stops, TC, group, near storefront. [t=6s] 1 lingering, BL, near bus stop.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s12"
   },
   {
    "segment_id": "cam2_s03",
    "camera_id": "sf_streets_cam-2",
    "caption": "Day. [t=1s] 1 sitting, ML, near ledge. [t=4s] 1 stops, ML, near ledge. [t=9s] 2 walking, BC.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s03"
   },
   {
    "segment_id": "cam2_s07",
    "camera_id": "sf_streets_cam-2",
    "caption": "Day. [t=3s] 1 sitting, ML, near ledge. [t=6s] 1 lingering, MR, near tree.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s07"
   },
   {
    "segment_id": "cam2_s10",
    "camera_id": "sf_streets_cam-2",
    "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 3 standing, BL, group, near bus stop. [t=8s] 1 standing, TC, near storefront.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s10"
   },
   {
    "segment_id": "cam2_s01",
    "camera_id": "sf_streets_cam-2",
    "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 4 walking, BC. [t=7s] 1 path change, BC, near bus stop, detour.",
-   "match": "same_space"
-  },
-  {
-   "segment_id": "cam3_s02",
-   "camera_id": "sf_streets_cam-3",
-   "caption": "Day. [t=3s] 3 walking, BC. [t=6s] 1 path change, BC, near bench, detour.",
-   "match": "similar_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s01"
   },
   {
    "segment_id": "cam2_s04",
    "camera_id": "sf_streets_cam-2",
    "caption": "Day. [t=2s] 2 lingering, ML, group, near ledge. [t=6s] 1 path change, BC, near pole, slowdown.",
-   "match": "same_space"
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s04"
+  },
+  {
+   "segment_id": "cam2_s06",
+   "camera_id": "sf_streets_cam-2",
+   "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 1 path change, BC, near bus stop, detour.",
+   "match": "same_space",
+   "clip_url": "/app/api/clip/cam2_s06"
   }
  ],
  "branches": [
@@ -2152,40 +2155,48 @@
    "id": "b1",
    "kind": "baseline",
    "intervention": "No change",
-   "prediction": "People will continue to stand near the bus stop, waiting for the bus.",
+   "prediction": "People likely keep standing at BL near the bus stop in short stops; groups form and break up within a minute.",
    "evidence": [
+    {
+     "segment_id": "cam2_s00",
+     "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s01",
+     "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s06",
+     "match": "same_space"
+    },
     {
      "segment_id": "cam2_s08",
      "match": "same_space"
-    },
-    {
-     "segment_id": "cam2_s10",
-     "match": "same_space"
     }
    ],
-   "risk": "Clear walking path may be obstructed by people waiting for the bus.",
+   "risk": "None added. Standing groups may keep spilling into the walking path.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "People standing near the bus stop"
+     "state": "Standing cluster at BL"
     },
     {
      "t": "+10m",
-     "state": "Bus arrives, people get on"
+     "state": "Short stops repeat"
     },
     {
      "t": "+30m",
-     "state": "People continue to walk by the bus stop"
+     "state": "Same pattern, no place to sit"
     }
    ],
-   "plausibility_n": 2,
-   "label": "plausible, based on 2 clips"
+   "plausibility_n": 4,
+   "label": "plausible, based on 4 clips"
   },
   {
-   "id": "i1",
+   "id": "b2",
    "kind": "intervention",
-   "intervention": "Add seating near the bus stop",
-   "prediction": "People will be more likely to sit and wait for the bus, reducing congestion near the bus stop.",
+   "intervention": "Bench at BL beside the bus stop, facing the crosswalk",
+   "prediction": "In similar clips, stops near seating may turn into longer sitting and lingering at BL, with groups gathering beside them.",
    "evidence": [
     {
      "segment_id": "cam2_s03",
@@ -2194,31 +2205,39 @@
     {
      "segment_id": "cam2_s07",
      "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s00",
+     "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s01",
+     "match": "same_space"
     }
    ],
-   "risk": "Seating may obstruct the clear walking path.",
+   "risk": "Keep at least 5 ft of clear path behind the bench for wheelchairs and strollers.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "Seating added near the bus stop"
+     "state": "First person sits"
     },
     {
      "t": "+10m",
-     "state": "People start to sit and wait for the bus"
+     "state": "Others stop beside the bench"
     },
     {
      "t": "+30m",
-     "state": "People continue to walk by the bus stop, with some sitting"
+     "state": "Longer stays, fewer people standing in the path"
     }
    ],
-   "plausibility_n": 2,
-   "label": "plausible, based on 2 clips"
+   "plausibility_n": 4,
+   "label": "plausible, based on 4 clips"
   },
   {
-   "id": "i2",
+   "id": "b3",
    "kind": "intervention",
-   "intervention": "Install lighting near the bus stop",
-   "prediction": "People will be more likely to stay near the bus stop at night, reducing congestion in the area.",
+   "intervention": "Pedestrian lighting over BL by the bus stop",
+   "prediction": "54% of stays at BL are at night. In similar clips, lit edges may keep night waits shorter and closer to the curb.",
    "evidence": [
     {
      "segment_id": "cam2_s08",
@@ -2227,37 +2246,47 @@
     {
      "segment_id": "cam2_s09",
      "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s10",
+     "match": "same_space"
+    },
+    {
+     "segment_id": "cam2_s12",
+     "match": "same_space"
     }
    ],
-   "risk": "Lighting may attract people to the area at night, increasing congestion.",
+   "risk": "Glare into ground-floor windows; keep fixtures low and shielded.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "Lighting installed near the bus stop"
+     "state": "Night waits under light"
     },
     {
      "t": "+10m",
-     "state": "People start to stay near the bus stop at night"
+     "state": "Groups gather in the lit area"
     },
     {
      "t": "+30m",
-     "state": "People continue to stay near the bus stop at night"
+     "state": "Night stays look like day stays"
     }
    ],
-   "plausibility_n": 2,
-   "label": "plausible, based on 2 clips"
+   "plausibility_n": 4,
+   "label": "plausible, based on 4 clips"
   }
  ],
  "recommendation": {
   "zone": "BL",
-  "action": "seating",
-  "why": "People are observed standing near the bus stop, waiting for the bus. Adding seating may encourage people to sit and wait, reducing congestion near the bus stop.",
+  "action": "Bench at BL beside the bus stop, facing the crosswalk",
+  "why": "BL has the most standing and lingering on this camera (21 person-stops) and no seating. In similar clips, people stay longer where there is a place to sit.",
   "segment_ids": [
    "cam2_s03",
-   "cam2_s07"
+   "cam2_s07",
+   "cam2_s00",
+   "cam2_s01"
   ],
-  "n": 2,
-  "label": "plausible, based on 2 clips"
+  "n": 4,
+  "label": "plausible, based on 4 clips"
  },
  "zone_stats": {
   "BL": 21,
@@ -2296,9 +2325,9 @@
  "trace": [
   {
    "step": "Plan searches",
-   "tool": "W&B LLM",
-   "summary": "5 queries: pedestrians waiting at crosswalk; people stopping to look at something; individuals sitting on benches; groups of people standing together; people pausing to take photos",
-   "ms": 393,
+   "tool": "rules",
+   "summary": "6 queries: people standing on the sidewalk; people lingering near the bus stop; group of people stopped together; person sitting on a bench or ledge; people walking around an obstacle; people waiting to cross",
+   "ms": 0,
    "mode": "ok"
   },
   {
@@ -2337,31 +2366,24 @@
    "mode": "ok"
   },
   {
-   "step": "Label links",
-   "tool": "W&B LLM",
-   "summary": "11 strongest links labeled",
-   "ms": 3048,
-   "mode": "ok"
-  },
-  {
    "step": "Find critical moves",
    "tool": "link degree",
    "ms": 1,
    "mode": "ok",
-   "summary": "5 critical moves; selected l070: The bus arrived near the bus stop, followed by a person standing."
+   "summary": "5 critical moves; selected l070: 2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop."
   },
   {
    "step": "Retrieve evidence",
    "tool": "local caption search, all cameras",
-   "summary": "10 evidence segments across 2 cameras",
-   "ms": 0,
+   "summary": "10 evidence segments across 1 cameras",
+   "ms": 39,
    "mode": "ok"
   },
   {
    "step": "Branch futures",
-   "tool": "W&B LLM",
+   "tool": "templates",
    "summary": "3 verified branches",
-   "ms": 3909,
+   "ms": 0,
    "mode": "ok"
   },
   {
@@ -2369,15 +2391,15 @@
    "tool": "code check",
    "ms": 1,
    "mode": "ok",
-   "summary": "every cited clip exists; N recomputed: b1=2, i1=2, i2=2"
+   "summary": "every cited clip exists; N recomputed: b1=4, b2=4, b3=4"
   },
   {
    "step": "Recommend",
-   "tool": "W&B LLM",
-   "summary": "seating (plausible, based on 2 clips)",
-   "ms": 502,
+   "tool": "rules",
+   "summary": "Bench at BL beside the bus stop, facing the crosswalk (plausible, based on 4 clips)",
+   "ms": 0,
    "mode": "ok"
   }
  ],
- "source": "mock_segments.json"
+ "source": "segments.json"
 }

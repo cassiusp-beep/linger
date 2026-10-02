@@ -133,6 +133,20 @@ def ask(question, camera_id, segments, use_llm=None):
     deg = degrees(events, links)
     link = _pick_link(events, links, crit)
     by = {e["id"]: e for e in events}
+    if not link:
+        tr.steps.append({"step": "Find critical moves", "tool": "link degree", "ms": 1, "mode": "ok",
+                         "summary": "not enough connected moments here to suggest a change"})
+        stats = zone_stats(events, camera_id)
+        seg_ids = {e["segment_id"] for e in events} or {s["segment_id"] for s in (window or [])[:24]}
+        return {
+            "question": question, "camera_id": camera_id, "mode": "llm" if use_llm else "rules",
+            "segments": [{k: s.get(k) for k in ("segment_id", "camera_id", "offset", "caption", "clip_url")}
+                         for s in segments if s["segment_id"] in seg_ids],
+            "events": [{**e, "degree": deg.get(e["id"], 0)} for e in events],
+            "links": links, "critical": crit, "selected_link": None, "evidence": [],
+            "branches": [], "recommendation": None,
+            "zone_stats": stats, "light_stats": light[0] if light else {}, "trace": tr.steps,
+        }
     a, b = by[link["from"]], by[link["to"]]
     tr.steps.append({"step": "Find critical moves", "tool": "link degree", "ms": 1, "mode": "ok",
                      "summary": f"{len(crit)} critical moves; selected {link['id']}: {link['rationale']}"})

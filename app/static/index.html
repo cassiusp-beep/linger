@@ -8,77 +8,104 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <header class="bar">
-  <div class="brand"><span class="logo" aria-hidden="true"></span>Linger</div>
-  <form class="ask" id="askForm">
-    <label class="sr" for="q">Ask about this street</label>
-    <input id="q" value="Where should seating go on this block?" autocomplete="off">
+  <a class="brand" href="#/" id="brandLink"><span class="logo" aria-hidden="true"></span>Linger</a>
+  <form class="ask" id="askForm" hidden>
+    <label class="sr" for="q">Ask about this place</label>
+    <input id="q" value="Where should seating go here?" autocomplete="off">
     <button type="submit" id="askBtn">Ask Linger</button>
   </form>
-  <button class="howbtn" id="howBtn" aria-expanded="false" aria-controls="how">How it works</button>
+  <button class="howbtn" id="howBtn" aria-expanded="false" aria-controls="how" hidden>How it works</button>
 </header>
 
-<div class="intro">
-  <p>Linger watches street camera footage, notices where people stop and wait, and suggests what to change. Every suggestion links back to the video it came from.</p>
-  <p class="meta" id="meta"></p>
-</div>
+<section id="libraryView">
+  <div class="libhero">
+    <h1>Where do people linger?</h1>
+    <p class="libsub" id="libSub">Linger read every clip in the VAST library and ranked the places where people stop and wait. Pick a place to see what happens there and what could change.</p>
+  </div>
+  <div class="stats" id="libStats" aria-label="Library stats"></div>
+  <section class="libsec">
+    <h2>Places to explore, ranked by how much people stop and wait</h2>
+    <div class="cards" id="libCards"></div>
+  </section>
+  <section class="libsec">
+    <h2>Also in the library</h2>
+    <ul class="also" id="libAlso"></ul>
+  </section>
+</section>
 
-<main class="page">
-  <div class="story">
-    <section class="step" id="s1">
-      <div class="stephead"><span class="num">1</span><div><h2>Where people stop</h2><p class="lede" id="s1lede"></p></div></div>
-      <div class="split">
-        <div class="streetwrap">
-          <div class="street"><video id="clip" muted playsinline preload="metadata"></video><svg id="street" viewBox="0 0 640 360" role="img" aria-label="Camera view divided into nine areas"></svg></div>
-          <div class="seg" role="group" aria-label="Time of day">
-            <button data-light="all" aria-pressed="true">All day</button><button data-light="day" aria-pressed="false">Daytime</button><button data-light="night" aria-pressed="false">Night</button>
-          </div>
-        </div>
-        <ol class="rank" id="rank" aria-label="Areas ranked by how often people stop"></ol>
+<div id="placeView" hidden>
+  <div class="intro">
+    <div>
+      <nav class="crumb" id="crumb"></nav>
+      <p>Linger watches street camera footage, notices where people stop and wait, and suggests what to change. Every suggestion links back to the video it came from.</p>
+      <div class="chips" id="chips" role="group" aria-label="Example questions">
+        <button type="button" data-q="Where should seating go here?">Where should seating go here?</button>
+        <button type="button" data-q="Where do people wait at night, and what would help?">Where do people wait at night, and what would help?</button>
+        <button type="button" data-q="Where do people get pushed off their path?">Where do people get pushed off their path?</button>
       </div>
-    </section>
-
-    <section class="step" id="s2">
-      <div class="stephead"><span class="num">2</span><div><h2>What tends to happen next</h2><p class="lede">Moments that happen close together, in the same spot. These are patterns, not proof that one thing caused the other.</p></div></div>
-      <div class="pairs" id="pairs"></div>
-      <div class="tl">
-        <div class="tlhead">
-          <h3>Timeline of every moment</h3>
-          <div class="keys">
-            <span><i class="kd stay"></i>someone stops</span><span><i class="kd walk"></i>someone walks by</span>
-            <span><i class="kd turn"></i>someone changes path</span><span><i class="kd veh"></i>a vehicle</span><span><i class="kd night"></i>night</span>
-          </div>
-          <label class="toggle"><input type="checkbox" id="allLinks"> Show all connections</label>
-        </div>
-        <div class="tlscroll"><svg id="lg" aria-label="Timeline of moments with arcs connecting related moments"></svg></div>
-        <p class="hint">Each dot is a moment. An arc joins two moments that happened close together in time and place. Click any dot or arc.</p>
-      </div>
-    </section>
-
-    <section class="step" id="s3">
-      <div class="stephead"><span class="num">3</span><div><h2>What could change</h2><p class="lede" id="s3lede"></p></div></div>
-      <div class="options" id="options"></div>
-    </section>
-
-    <section class="step rec" id="s4">
-      <div class="stephead"><span class="num">4</span><div><h2>Recommendation</h2></div></div>
-      <div id="recbody"></div>
-    </section>
+    </div>
+    <p class="meta" id="meta"></p>
   </div>
 
-  <aside class="side" aria-label="Details">
-    <div class="card" id="detail"></div>
-    <div class="card how" id="how" hidden>
-      <h3>How Linger worked this out</h3>
-      <ol class="trace" id="trace"></ol>
-    </div>
-  </aside>
-</main>
+  <main class="page">
+    <div class="story">
+      <section class="step" id="s1">
+        <div class="stephead"><span class="num">1</span><div><h2>Where people stop</h2><p class="lede" id="s1lede"></p></div></div>
+        <div class="split">
+          <div class="streetwrap">
+            <div class="street"><video id="clip" muted playsinline loop preload="metadata"></video><svg id="street" viewBox="0 0 640 360" role="img" aria-label="Camera view divided into nine areas"></svg></div>
+            <div class="seg" role="group" aria-label="Time of day">
+              <button data-light="all" aria-pressed="true">All day</button><button data-light="day" aria-pressed="false">Daytime</button><button data-light="night" aria-pressed="false">Night</button>
+            </div>
+            <p class="clipnote" id="clipnote">Playing camera footage in the street view above.</p>
+          </div>
+          <ol class="rank" id="rank" aria-label="Areas ranked by how often people stop"></ol>
+        </div>
+      </section>
 
-<script src="cache.js"></script>
-<script src="app.js"></script>
+      <section class="step" id="s2">
+        <div class="stephead"><span class="num">2</span><div><h2>What tends to happen next</h2><p class="lede" id="s2lede">Moments that happen close together, in the same spot. These are patterns, not proof that one thing caused the other.</p></div></div>
+        <div class="pairs" id="pairs"></div>
+        <div class="tl">
+          <div class="tlhead">
+            <h3>Timeline of every moment</h3>
+            <div class="keys">
+              <span><i class="kd stay"></i>someone stops</span><span><i class="kd walk"></i>someone walks by</span>
+              <span><i class="kd turn"></i>someone changes path</span><span><i class="kd veh"></i>a vehicle</span><span><i class="kd night"></i>night</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="allLinks"> Show all connections</label>
+          </div>
+          <div class="tlscroll"><svg id="lg" aria-label="Timeline of moments with arcs connecting related moments"></svg></div>
+          <p class="hint">Each dot is a moment. An arc joins two moments that happened close together in time and place. Click any dot or arc.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s3">
+        <div class="stephead"><span class="num">3</span><div><h2>What could change</h2><p class="lede" id="s3lede"></p></div></div>
+        <div class="options" id="options"></div>
+      </section>
+
+      <section class="step rec" id="s4">
+        <div class="stephead"><span class="num">4</span><div><h2>Recommendation</h2></div></div>
+        <div id="recbody"></div>
+      </section>
+    </div>
+
+    <aside class="side" aria-label="Details">
+      <div class="card" id="detail"></div>
+      <div class="card how" id="how" hidden>
+        <h3>How Linger worked this out</h3>
+        <ol class="trace" id="trace"></ol>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<script src="cache.js?v=8"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from agent import llm
 from agent.agent import ask
+from agent.library import summarize
 
 p = argparse.ArgumentParser()
 p.add_argument("--camera", default=None)
@@ -18,15 +19,42 @@ args = p.parse_args()
 real = ROOT / "data" / "segments.json"
 src = real if real.exists() else ROOT / "data" / "mock_segments.json"
 segments = json.loads(src.read_text())
-cam = args.camera or max({s["camera_id"] for s in segments},
-                         key=lambda c: sum(1 for s in segments if s["camera_id"] == c))
+library = summarize(segments)
+analyzable = [c for c in library["cameras"] if c["analyzed"]]
+if args.camera:
+    cam = args.camera
+elif analyzable:
+    cam = analyzable[0]["camera_id"]
+else:
+    cam = max({s["camera_id"] for s in segments},
+              key=lambda c: sum(1 for s in segments if s["camera_id"] == c))
+
 llm.init_tracing() if llm.available() else None
 res = ask(args.question, cam, segments)
 res["source"] = src.name
 (ROOT / "data" / "cache.json").write_text(json.dumps(res, indent=1))
-(ROOT / "app" / "static" / "cache.js").write_text("window.LINGER_CACHE = " + json.dumps(res) + ";\n")
-print(f"source={src.name} camera={cam} mode={res['mode']} events={len(res['events'])} "
-      f"links={len(res['links'])} branches={len(res['branches'])}")
-for s in res["trace"]:
+
+# Rules-only run for every other analyzable camera (place pages offline)
+runs = {cam: res}
+for c in analyzable:
+    cid = c["camera_id"]
+    if cid == cam:
+        continue
+    runs[cid] = ask(args.question, cid, segments, use_llm=False)
+    runs[cid]["source"] = src.name
+
+library_payload = {"library": {**library, "source": src.name}, "runs": runs}
+(ROOT / "data" / "library.json").write_text(json.dumps(library_payload, indent=1))
+(ROOT / "app" / "static" / "cache.js").write_text(
+    "window.LINGER_CACHE = " + json.dumps(res) + ";\n"
+    "window.LINGER_LIBRARY = " + json.dumps(library_payload) + ";\n"
+)
+
+print(f"source={src.name} camera={cam} mode={res['mode']} events={len(res.get('events') or [])} "
+      f"links={len(res.get('links') or [])} branches={len(res.get('branches') or [])}")
+print(f"library cameras={library['total_cameras']} analyzed={library['analyzed_cameras']} "
+      f"runs={len(runs)}")
+for s in res.get("trace") or []:
     print(f"  {s['step']:<20} {s['tool']:<26} {s['ms']:>5}ms  {s['summary']}")
-print("REC:", res["recommendation"]["action"], "|", res["recommendation"]["label"])
+rec = res.get("recommendation") or {}
+print("REC:", rec.get("action"), "|", rec.get("label"))

@@ -1,11 +1,14 @@
 """Search adapters.
 
 local_search: keyword overlap over captions in segments.json. Works offline, used as fallback.
-vss_search:   wire this to the VSS search API (ask Cursor: "show me the HTTP call the search
-              skill makes, then implement vss_search(query, camera_id, k) returning segment_ids").
+vss_search:   hybrid search against the team VSS archive, mapped back to local segment_ids.
 """
+import json
 import os
+import pathlib
 import re
+
+from . import vss
 
 SYN = {
     "sit": ["sitting", "seated", "bench", "ledge"], "seating": ["sitting", "bench", "ledge"],
@@ -13,6 +16,9 @@ SYN = {
     "group": ["group"], "detour": ["path change", "detour", "slowdown"], "obstacle": ["pole", "detour"],
     "wait": ["waiting", "crosswalk"], "cross": ["crosswalk", "waiting"],
 }
+
+_ROOT = pathlib.Path(__file__).resolve().parents[1]
+_SOURCE_TO_ID: dict[str, str] | None = None
 
 
 def _terms(q):
@@ -39,13 +45,53 @@ def local_search(query, segments, camera_id=None, k=5):
     return [sid for _, sid in scored[:k]]
 
 
+def _source_index():
+    global _SOURCE_TO_ID
+    if _SOURCE_TO_ID is not None:
+        return _SOURCE_TO_ID
+    path = _ROOT / "data" / "clip_sources.json"
+    if not path.exists():
+        _SOURCE_TO_ID = {}
+        return _SOURCE_TO_ID
+    mapping = json.loads(path.read_text())
+    _SOURCE_TO_ID = {src: sid for sid, src in mapping.items()}
+    return _SOURCE_TO_ID
+
+
 def vss_search(query, segments, camera_id=None, k=5):
-    raise NotImplementedError("Wire vss_search to the VSS search endpoint (see module docstring).")
+    """Search VSS, return local segment_ids. Falls back to local_search on any failure."""
+    if not vss.configured():
+        return local_search(query, segments, camera_id, k)
+    try:
+        hits = vss.search(query, camera_id=camera_id, top_k=max(k * 3, 15))
+    except Exception as e:
+        print("vss_search failed, using local:", e)
+        return local_search(query, segments, camera_id, k)
+    by_src = _source_index()
+    known = {s["segment_id"] for s in segments}
+    out = []
+    for hit in hits:
+        sid = by_src.get(hit.get("source"))
+        if not sid or sid not in known or sid in out:
+            continue
+        if camera_id:
+            # VSS already filtered; keep a local guard
+            seg = next((s for s in segments if s["segment_id"] == sid), None)
+            if seg and seg.get("camera_id") != camera_id:
+                continue
+        out.append(sid)
+        if len(out) >= k:
+            break
+    return out or local_search(query, segments, camera_id, k)
 
 
 def get_search():
-    return vss_search if os.getenv("LINGER_SEARCH") == "vss" else local_search
+    if os.getenv("LINGER_SEARCH", "vss") == "vss" and vss.configured():
+        return vss_search
+    return local_search
 
 
 def search_label():
-    return "VSS search" if os.getenv("LINGER_SEARCH") == "vss" else "local caption search"
+    if get_search() is vss_search:
+        return "VSS search"
+    return "local caption search"
