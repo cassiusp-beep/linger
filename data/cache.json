@@ -1,7 +1,7 @@
 {
  "question": "Where should seating go on this block?",
  "camera_id": "sf_streets_cam-4",
- "mode": "rules",
+ "mode": "llm",
  "segments": [
   {
    "segment_id": "20261001_100703_sf4_chunk_0000_segment_001_of_006",
@@ -701,7 +701,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "3 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+   "rationale": "person stands near bus stop after bus arrives",
    "is_causal": false
   },
   {
@@ -712,7 +712,7 @@
    "dt": 9.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "2 people standing at BL near the bus stop, 9s after a bus arriving at BL near the bus stop.",
+   "rationale": "person stands near bus stop after bus arrives",
    "is_causal": false
   },
   {
@@ -898,8 +898,8 @@
    "score": 0.93,
    "dt": 3.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "2 people lingering at MR near the bench, 3s after 1 person sitting at MR near the bench.",
+   "type": "co-occurs",
+   "rationale": "people sit and linger near bench together",
    "is_causal": false
   },
   {
@@ -909,8 +909,8 @@
    "score": 0.812,
    "dt": 7.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "1 person stopping at MR near the bench, 7s after 1 person sitting at MR near the bench.",
+   "type": "follows",
+   "rationale": "person stops after sitting near bench",
    "is_causal": false
   },
   {
@@ -931,8 +931,8 @@
    "score": 0.889,
    "dt": 4.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "1 person stopping at MR near the bench, 4s after 2 people lingering at MR near the bench.",
+   "type": "follows",
+   "rationale": "person stops after lingering near bench",
    "is_causal": false
   },
   {
@@ -1053,7 +1053,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "4 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+   "rationale": "person stands near bus stop after bus arrives",
    "is_causal": false
   },
   {
@@ -1195,8 +1195,8 @@
    "score": 0.799,
    "dt": 9.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "3 people standing at BL near the bus stop, 9s after 2 people lingering at BL near the bus stop.",
+   "type": "follows",
+   "rationale": "person stands after lingering near bus stop",
    "is_causal": false
   },
   {
@@ -1272,8 +1272,8 @@
    "score": 0.869,
    "dt": 4.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "1 person lingering at BL near the bus stop, 4s after 3 people standing at BL near the bus stop.",
+   "type": "follows",
+   "rationale": "person lingers after standing near bus stop",
    "is_causal": false
   },
   {
@@ -1305,8 +1305,8 @@
    "score": 0.799,
    "dt": 9.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "2 people standing at BL near the bus stop, 9s after 1 person lingering at BL near the bus stop.",
+   "type": "follows",
+   "rationale": "person stands after lingering near bus stop",
    "is_causal": false
   },
   {
@@ -1350,7 +1350,7 @@
    "dt": 2.0,
    "zone_rel": "same",
    "type": "attracts",
-   "rationale": "2 people standing at BL near the bus stop, 2s after a bus arriving at BL near the bus stop.",
+   "rationale": "person stands near bus stop after bus arrives",
    "is_causal": false
   },
   {
@@ -1437,8 +1437,8 @@
    "score": 0.889,
    "dt": 5.0,
    "zone_rel": "same",
-   "type": "attracts",
-   "rationale": "1 person lingering at MR near the bench, 5s after 2 people sitting at MR near the bench.",
+   "type": "follows",
+   "rationale": "person lingers after sitting near bench",
    "is_causal": false
   },
   {
@@ -1492,8 +1492,8 @@
    "score": 0.869,
    "dt": 4.0,
    "zone_rel": "same",
-   "type": "blocks",
-   "rationale": "1 person changing path at BR near the crosswalk, 4s after 2 people standing at BR near the crosswalk.",
+   "type": "follows",
+   "rationale": "person changes path after standing near crosswalk",
    "is_causal": false
   },
   {
@@ -1657,141 +1657,115 @@
  ],
  "branches": [
   {
-   "id": "b1",
+   "id": "branch1",
    "kind": "baseline",
    "intervention": "No change",
-   "prediction": "People likely keep standing at BL near the bus stop in short stops; groups form and break up within a minute.",
+   "prediction": "People may continue to linger near the bus stop, likely due to the bus arrival.",
    "evidence": [
     {
-     "segment_id": "20261001_100703_sf4_chunk_0000_segment_001_of_006",
-     "match": "same_space"
-    },
-    {
-     "segment_id": "20261001_100753_sf4_chunk_0002_segment_004_of_006",
+     "segment_id": "20261001_101206_sf4_chunk_0012_segment_004_of_006",
      "match": "same_space"
     },
     {
      "segment_id": "20261001_101115_sf4_chunk_0010_segment_001_of_006",
      "match": "same_space"
-    },
-    {
-     "segment_id": "20261001_101206_sf4_chunk_0012_segment_004_of_006",
-     "match": "same_space"
     }
    ],
-   "risk": "None added. Standing groups may keep spilling into the walking path.",
+   "risk": "Clear walking path may be obstructed by lingering individuals.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "Standing cluster at BL"
+     "state": "People may be waiting for the bus."
     },
     {
      "t": "+10m",
-     "state": "Short stops repeat"
+     "state": "The bus may arrive, and people may linger near the bus stop."
     },
     {
      "t": "+30m",
-     "state": "Same pattern, no place to sit"
+     "state": "People may continue to linger near the bus stop."
     }
    ],
-   "plausibility_n": 4,
-   "label": "plausible, based on 4 clips"
+   "plausibility_n": 2,
+   "label": "plausible, based on 2 clips"
   },
   {
-   "id": "b2",
+   "id": "branch2",
    "kind": "intervention",
-   "intervention": "Bench at BL beside the bus stop, facing the crosswalk",
-   "prediction": "In similar clips, stops near seating may turn into longer sitting and lingering at BL, with groups gathering beside them.",
+   "intervention": "Add seating near the bus stop",
+   "prediction": "People may be more likely to sit and wait for the bus, rather than lingering near the bus stop.",
    "evidence": [
-    {
-     "segment_id": "20261001_100909_sf4_chunk_0005_segment_001_of_006",
-     "match": "same_space"
-    },
     {
      "segment_id": "20261001_101206_sf4_chunk_0012_segment_004_of_006",
      "match": "same_space"
     },
     {
-     "segment_id": "20261001_101528_sf4_chunk_0020_segment_001_of_006",
-     "match": "same_space"
-    },
-    {
-     "segment_id": "20261001_101825_sf4_chunk_0027_segment_004_of_006",
+     "segment_id": "20261001_101115_sf4_chunk_0010_segment_001_of_006",
      "match": "same_space"
     }
    ],
-   "risk": "Keep at least 5 ft of clear path behind the bench for wheelchairs and strollers.",
+   "risk": "Clear walking path may be obstructed by seating and lingering individuals.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "First person sits"
+     "state": "People may be waiting for the bus and may sit near the bus stop."
     },
     {
      "t": "+10m",
-     "state": "Others stop beside the bench"
+     "state": "The bus may arrive, and people may sit and wait near the bus stop."
     },
     {
      "t": "+30m",
-     "state": "Longer stays, fewer people standing in the path"
+     "state": "People may continue to sit and wait near the bus stop."
     }
    ],
-   "plausibility_n": 4,
-   "label": "plausible, based on 4 clips"
+   "plausibility_n": 2,
+   "label": "plausible, based on 2 clips"
   },
   {
-   "id": "b3",
+   "id": "branch3",
    "kind": "intervention",
-   "intervention": "Pedestrian lighting over BL by the bus stop",
-   "prediction": "33% of stays at BL are at night. In similar clips, lit edges may keep night waits shorter and closer to the curb.",
+   "intervention": "Install a bus shelter near the bus stop",
+   "prediction": "People may be more likely to wait under the shelter, rather than lingering near the bus stop.",
    "evidence": [
     {
-     "segment_id": "20261001_101322_sf4_chunk_0015_segment_001_of_006",
+     "segment_id": "20261001_101206_sf4_chunk_0012_segment_004_of_006",
      "match": "same_space"
     },
     {
-     "segment_id": "20261001_101412_sf4_chunk_0017_segment_004_of_006",
-     "match": "same_space"
-    },
-    {
-     "segment_id": "20261001_101528_sf4_chunk_0020_segment_001_of_006",
-     "match": "same_space"
-    },
-    {
-     "segment_id": "20261001_100703_sf4_chunk_0000_segment_001_of_006",
+     "segment_id": "20261001_101115_sf4_chunk_0010_segment_001_of_006",
      "match": "same_space"
     }
    ],
-   "risk": "Glare into ground-floor windows; keep fixtures low and shielded.",
+   "risk": "Clear walking path may be obstructed by people waiting under the shelter.",
    "timeline": [
     {
      "t": "+0m",
-     "state": "Night waits under light"
+     "state": "People may be waiting for the bus and may wait under the shelter."
     },
     {
      "t": "+10m",
-     "state": "Groups gather in the lit area"
+     "state": "The bus may arrive, and people may wait under the shelter."
     },
     {
      "t": "+30m",
-     "state": "Night stays look like day stays"
+     "state": "People may continue to wait under the shelter."
     }
    ],
-   "plausibility_n": 4,
-   "label": "plausible, based on 4 clips"
+   "plausibility_n": 2,
+   "label": "plausible, based on 2 clips"
   }
  ],
  "recommendation": {
   "zone": "BL",
-  "action": "Bench at BL beside the bus stop, facing the crosswalk",
-  "why": "BL has the most standing and lingering on this camera (20 person-stops) and no seating. In similar clips, people stay longer where there is a place to sit.",
+  "action": "Add a bench at the bus stop, facing the crosswalk.",
+  "why": "People are observed lingering near the bus stop, likely due to the bus arrival. This behavior may obstruct the clear walking path.",
   "segment_ids": [
-   "20261001_100909_sf4_chunk_0005_segment_001_of_006",
    "20261001_101206_sf4_chunk_0012_segment_004_of_006",
-   "20261001_101528_sf4_chunk_0020_segment_001_of_006",
-   "20261001_101825_sf4_chunk_0027_segment_004_of_006"
+   "20261001_101115_sf4_chunk_0010_segment_001_of_006"
   ],
-  "n": 4,
-  "label": "plausible, based on 4 clips"
+  "n": 2,
+  "label": "plausible, based on 2 clips"
  },
  "zone_stats": {
   "BL": 20,
@@ -1824,15 +1798,15 @@
  "trace": [
   {
    "step": "Plan searches",
-   "tool": "rules",
-   "summary": "6 queries: people standing on the sidewalk; people lingering near the bus stop; group of people stopped together; person sitting on a bench or ledge; people walking around an obstacle; people waiting to cross",
-   "ms": 0,
+   "tool": "W&B LLM",
+   "summary": "5 queries: pedestrians stopping near streetlights; people pausing at corners; individuals waiting at bus stops; groups congregating near benches; walkers pausing at street art",
+   "ms": 552,
    "mode": "ok"
   },
   {
    "step": "Search footage",
    "tool": "local caption search",
-   "summary": "12 matching segments on sf_streets_cam-4",
+   "summary": "9 matching segments on sf_streets_cam-4",
    "ms": 0,
    "mode": "ok"
   },
@@ -1865,6 +1839,13 @@
    "mode": "ok"
   },
   {
+   "step": "Label links",
+   "tool": "W&B LLM",
+   "summary": "12 strongest links labeled",
+   "ms": 2372,
+   "mode": "ok"
+  },
+  {
    "step": "Find critical moves",
    "tool": "link degree",
    "ms": 1,
@@ -1880,9 +1861,9 @@
   },
   {
    "step": "Branch futures",
-   "tool": "templates",
+   "tool": "W&B LLM",
    "summary": "3 verified branches",
-   "ms": 0,
+   "ms": 4574,
    "mode": "ok"
   },
   {
@@ -1890,15 +1871,462 @@
    "tool": "code check",
    "ms": 1,
    "mode": "ok",
-   "summary": "every cited clip exists; N recomputed: b1=4, b2=4, b3=4"
+   "summary": "every cited clip exists; N recomputed: branch1=2, branch2=2, branch3=2"
   },
   {
    "step": "Recommend",
-   "tool": "rules",
-   "summary": "Bench at BL beside the bus stop, facing the crosswalk (plausible, based on 4 clips)",
-   "ms": 0,
+   "tool": "W&B LLM",
+   "summary": "Add a bench at the bus stop, facing the crosswalk. (plausible, based on 2 clips)",
+   "ms": 714,
    "mode": "ok"
   }
  ],
+ "placements": {
+  "seating": [
+   {
+    "id": "p-seating-bus_stop",
+    "intent": "seating",
+    "label": "Potential bench location",
+    "kind": "bench",
+    "near": "bus stop",
+    "place_name": "bus stop",
+    "score": 22,
+    "box": {
+     "x": 38.4,
+     "y": 212.4,
+     "w": 174.1,
+     "h": 97.2
+    },
+    "poly": [
+     [
+      47.105,
+      231.84
+     ],
+     [
+      168.975,
+      212.4
+     ],
+     [
+      212.5,
+      256.14
+     ],
+     [
+      186.385,
+      309.6
+     ],
+     [
+      55.81,
+      299.88
+     ],
+     [
+      38.4,
+      261.0
+     ]
+    ],
+    "why": "People stand and linger beside the bus stop (20 long waits) with little seating in view.",
+    "people": 20,
+    "groups": 6
+   },
+   {
+    "id": "p-seating-crosswalk",
+    "intent": "seating",
+    "label": "Potential bench location",
+    "kind": "bench",
+    "near": "crosswalk",
+    "place_name": "crosswalk",
+    "score": 6,
+    "box": {
+     "x": 371.2,
+     "y": 223.2,
+     "w": 228.5,
+     "h": 91.8
+    },
+    "poly": [
+     [
+      382.625,
+      241.56
+     ],
+     [
+      542.575,
+      223.2
+     ],
+     [
+      599.7,
+      264.51
+     ],
+     [
+      565.425,
+      315.0
+     ],
+     [
+      394.05,
+      305.82
+     ],
+     [
+      371.2,
+      269.09999999999997
+     ]
+    ],
+    "why": "People stand and linger beside the crosswalk (4 long waits) with little seating in view.",
+    "people": 4,
+    "groups": 1
+   },
+   {
+    "id": "p-circ-walkway",
+    "intent": "seating",
+    "label": "Keep circulation clear",
+    "kind": "circulation",
+    "near": "walkway",
+    "place_name": "walkway",
+    "score": 4.4,
+    "box": {
+     "x": 140.8,
+     "y": 198.0,
+     "w": 358.4,
+     "h": 115.2
+    },
+    "poly": [
+     [
+      169.472,
+      226.8
+     ],
+     [
+      470.528,
+      215.28
+     ],
+     [
+      481.28,
+      295.92
+     ],
+     [
+      158.72,
+      301.68
+     ]
+    ],
+    "why": "Walkers and path changes concentrate on the walkway (11 flow moments); leave this strip open.",
+    "people": 11,
+    "groups": 0
+   },
+   {
+    "id": "p-seating-doorway",
+    "intent": "seating",
+    "label": "Potential bench location",
+    "kind": "bench",
+    "near": "doorway",
+    "place_name": "doorway",
+    "score": 4,
+    "box": {
+     "x": 281.6,
+     "y": 36.0,
+     "w": 174.1,
+     "h": 81.0
+    },
+    "poly": [
+     [
+      290.305,
+      52.2
+     ],
+     [
+      412.175,
+      36.0
+     ],
+     [
+      455.70000000000005,
+      72.45
+     ],
+     [
+      429.58500000000004,
+      117.0
+     ],
+     [
+      299.01000000000005,
+      108.9
+     ],
+     [
+      281.6,
+      76.5
+     ]
+    ],
+    "why": "People stand and linger beside the doorway (2 long waits) with little seating in view.",
+    "people": 2,
+    "groups": 1
+   },
+   {
+    "id": "p-seating-bench",
+    "intent": "seating",
+    "label": "Seating opportunity",
+    "kind": "seating",
+    "near": "bench",
+    "place_name": "bench",
+    "score": 1,
+    "box": {
+     "x": 396.8,
+     "y": 187.2,
+     "w": 163.2,
+     "h": 81.0
+    },
+    "poly": [
+     [
+      404.96000000000004,
+      203.39999999999998
+     ],
+     [
+      519.2,
+      187.2
+     ],
+     [
+      560.0,
+      223.64999999999998
+     ],
+     [
+      535.52,
+      268.2
+     ],
+     [
+      413.12,
+      260.1
+     ],
+     [
+      396.8,
+      227.7
+     ]
+    ],
+    "why": "People already sit near the bench; more seating may fit beside the waits (4 standing waits).",
+    "people": 4,
+    "groups": 2
+   }
+  ],
+  "crowd": [
+   {
+    "id": "p-crowd-bus_stop",
+    "intent": "crowd",
+    "label": "Potential queue area",
+    "kind": "queue",
+    "near": "bus stop",
+    "place_name": "bus stop",
+    "score": 22.0,
+    "box": {
+     "x": 35.2,
+     "y": 198.0,
+     "w": 235.5,
+     "h": 142.6
+    },
+    "poly": [
+     [
+      63.46,
+      198.0
+     ],
+     [
+      242.44,
+      209.408
+     ],
+     [
+      270.7,
+      276.43
+     ],
+     [
+      218.89,
+      340.6
+     ],
+     [
+      70.525,
+      329.192
+     ],
+     [
+      35.2,
+      255.04
+     ]
+    ],
+    "why": "Groups gather at the bus stop (16 people in clusters). Queue guides or barriers may help.",
+    "people": 16,
+    "groups": 6
+   },
+   {
+    "id": "p-crowd-bench",
+    "intent": "crowd",
+    "label": "Crowd-management zone",
+    "kind": "crowd",
+    "near": "bench",
+    "place_name": "bench",
+    "score": 6.0,
+    "box": {
+     "x": 390.4,
+     "y": 172.8,
+     "w": 220.8,
+     "h": 118.8
+    },
+    "poly": [
+     [
+      416.89599999999996,
+      172.8
+     ],
+     [
+      584.704,
+      182.304
+     ],
+     [
+      611.2,
+      238.14000000000001
+     ],
+     [
+      562.624,
+      291.6
+     ],
+     [
+      423.52,
+      282.096
+     ],
+     [
+      390.4,
+      220.32000000000002
+     ]
+    ],
+    "why": "Repeated groups stop at the bench (2 group moments, 4 people). Crowd tools may help keep paths open.",
+    "people": 4,
+    "groups": 2
+   },
+   {
+    "id": "p-crowd-crosswalk",
+    "intent": "crowd",
+    "label": "Crowd-management zone",
+    "kind": "crowd",
+    "near": "crosswalk",
+    "place_name": "crosswalk",
+    "score": 5.0,
+    "box": {
+     "x": 361.6,
+     "y": 208.8,
+     "w": 309.1,
+     "h": 134.6
+    },
+    "poly": [
+     [
+      398.692,
+      208.8
+     ],
+     [
+      633.6080000000001,
+      219.568
+     ],
+     [
+      670.7,
+      282.83000000000004
+     ],
+     [
+      602.6980000000001,
+      343.4
+     ],
+     [
+      407.96500000000003,
+      332.632
+     ],
+     [
+      361.6,
+      262.64
+     ]
+    ],
+    "why": "Repeated groups stop at the crosswalk (1 group moments, 2 people). Crowd tools may help keep paths open.",
+    "people": 2,
+    "groups": 1
+   },
+   {
+    "id": "p-crowd-doorway",
+    "intent": "crowd",
+    "label": "Crowd-management zone",
+    "kind": "crowd",
+    "near": "doorway",
+    "place_name": "doorway",
+    "score": 5.0,
+    "box": {
+     "x": 265.6,
+     "y": 21.6,
+     "w": 235.5,
+     "h": 118.8
+    },
+    "poly": [
+     [
+      293.86,
+      21.6
+     ],
+     [
+      472.84000000000003,
+      31.104
+     ],
+     [
+      501.1,
+      86.94
+     ],
+     [
+      449.29,
+      140.4
+     ],
+     [
+      300.925,
+      130.89600000000002
+     ],
+     [
+      265.6,
+      69.12
+     ]
+    ],
+    "why": "Repeated groups stop at the doorway (1 group moments, 2 people). Crowd tools may help keep paths open.",
+    "people": 2,
+    "groups": 1
+   },
+   {
+    "id": "p-circ-walkway",
+    "intent": "crowd",
+    "label": "Keep circulation clear",
+    "kind": "circulation",
+    "near": "walkway",
+    "place_name": "walkway",
+    "score": 3.85,
+    "box": {
+     "x": 140.8,
+     "y": 198.0,
+     "w": 358.4,
+     "h": 115.2
+    },
+    "poly": [
+     [
+      169.472,
+      226.8
+     ],
+     [
+      470.528,
+      215.28
+     ],
+     [
+      481.28,
+      295.92
+     ],
+     [
+      158.72,
+      301.68
+     ]
+    ],
+    "why": "Pedestrian flow crosses the walkway (11 moments). Keep a clear lane beside any crowd control.",
+    "people": 11,
+    "groups": 0
+   }
+  ]
+ },
+ "scene": {
+  "features": [
+   "bench",
+   "bus stop",
+   "crosswalk",
+   "doorway",
+   "pole"
+  ],
+  "people_waiting": 30,
+  "crowd_clusters": 13,
+  "existing_seating": [
+   "bench"
+  ],
+  "walkways": [
+   "walkway"
+  ]
+ },
  "source": "segments.json"
 }
