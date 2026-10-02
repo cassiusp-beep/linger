@@ -2352,7 +2352,7 @@
    "step": "Link events",
    "tool": "timing + proximity score",
    "summary": "117 links above 0.5, 33 between vehicles and people",
-   "ms": 1,
+   "ms": 0,
    "mode": "ok"
   },
   {
