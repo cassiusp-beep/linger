@@ -4,70 +4,78 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Linger</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%2324272A%22/%3E%3Cpath d=%22M3 13 L8 4 L13 13%22 stroke=%22%23F2C230%22 stroke-width=%222%22 fill=%22none%22/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 rx=%224%22 fill=%22%230E6B4F%22/%3E%3Ccircle cx=%228%22 cy=%228%22 r=%223%22 fill=%22white%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top">
-  <div class="brand"><span class="mark" aria-hidden="true"></span>Linger</div>
+<header class="bar">
+  <div class="brand"><span class="logo" aria-hidden="true"></span>Linger</div>
   <form class="ask" id="askForm">
-    <label class="sr" for="q">Design question</label>
+    <label class="sr" for="q">Ask about this street</label>
     <input id="q" value="Where should seating go on this block?" autocomplete="off">
-    <button type="submit" id="askBtn">Ask</button>
+    <button type="submit" id="askBtn">Ask Linger</button>
   </form>
-  <div class="cam" id="camLabel"></div>
+  <button class="howbtn" id="howBtn" aria-expanded="false" aria-controls="how">How it works</button>
 </header>
 
-<main class="grid">
-  <section class="view" aria-label="Camera view">
-    <div class="frame">
-      <video id="clip" muted playsinline preload="metadata"></video>
-      <svg id="zones" viewBox="0 0 640 360" role="img" aria-label="Camera frame split into a 3 by 3 zone grid"></svg>
-    </div>
-    <div class="viewfoot">
-      <p class="caption" id="viewCaption">Zones are shaded by how many people stopped, stood, sat or lingered there.</p>
-      <div class="lightchips" role="group" aria-label="Time of day">
-        <button data-light="all" aria-pressed="true">All</button><button data-light="day" aria-pressed="false">Day</button><button data-light="night" aria-pressed="false">Night</button>
+<div class="intro">
+  <p>Linger watches street camera footage, notices where people stop and wait, and suggests what to change. Every suggestion links back to the video it came from.</p>
+  <p class="meta" id="meta"></p>
+</div>
+
+<main class="page">
+  <div class="story">
+    <section class="step" id="s1">
+      <div class="stephead"><span class="num">1</span><div><h2>Where people stop</h2><p class="lede" id="s1lede"></p></div></div>
+      <div class="split">
+        <div class="streetwrap">
+          <div class="street"><video id="clip" muted playsinline preload="metadata"></video><svg id="street" viewBox="0 0 640 360" role="img" aria-label="Camera view divided into nine areas"></svg></div>
+          <div class="seg" role="group" aria-label="Time of day">
+            <button data-light="all" aria-pressed="true">All day</button><button data-light="day" aria-pressed="false">Daytime</button><button data-light="night" aria-pressed="false">Night</button>
+          </div>
+        </div>
+        <ol class="rank" id="rank" aria-label="Areas ranked by how often people stop"></ol>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <aside class="panel">
-    <div class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-tab="details">Details</button>
-      <button role="tab" aria-selected="false" data-tab="steps">Agent steps</button>
+    <section class="step" id="s2">
+      <div class="stephead"><span class="num">2</span><div><h2>What tends to happen next</h2><p class="lede">Moments that happen close together, in the same spot. These are patterns, not proof that one thing caused the other.</p></div></div>
+      <div class="pairs" id="pairs"></div>
+      <div class="tl">
+        <div class="tlhead">
+          <h3>Timeline of every moment</h3>
+          <div class="keys">
+            <span><i class="kd stay"></i>someone stops</span><span><i class="kd walk"></i>someone walks by</span>
+            <span><i class="kd turn"></i>someone changes path</span><span><i class="kd veh"></i>a vehicle</span><span><i class="kd night"></i>night</span>
+          </div>
+          <label class="toggle"><input type="checkbox" id="allLinks"> Show all connections</label>
+        </div>
+        <div class="tlscroll"><svg id="lg" aria-label="Timeline of moments with arcs connecting related moments"></svg></div>
+        <p class="hint">Each dot is a moment. An arc joins two moments that happened close together in time and place. Click any dot or arc.</p>
+      </div>
+    </section>
+
+    <section class="step" id="s3">
+      <div class="stephead"><span class="num">3</span><div><h2>What could change</h2><p class="lede" id="s3lede"></p></div></div>
+      <div class="options" id="options"></div>
+    </section>
+
+    <section class="step rec" id="s4">
+      <div class="stephead"><span class="num">4</span><div><h2>Recommendation</h2></div></div>
+      <div id="recbody"></div>
+    </section>
+  </div>
+
+  <aside class="side" aria-label="Details">
+    <div class="card" id="detail"></div>
+    <div class="card how" id="how" hidden>
+      <h3>How Linger worked this out</h3>
+      <ol class="trace" id="trace"></ol>
     </div>
-    <div class="tabbody" id="details"></div>
-    <div class="tabbody" id="steps" hidden></div>
   </aside>
-
-  <section class="lg" aria-label="Linkograph">
-    <div class="lghead">
-      <h2>Linkograph</h2>
-      <p>Each dot is a behavior event in time order. Each yellow peak joins two events that happened close in time and space, including vehicles and people. Bigger dots have more links; ringed dots are critical moves.</p>
-      <ul class="legend">
-        <li><i class="k stay"></i>stays (stop, stand, sit, linger)</li>
-        <li><i class="k walk"></i>walks</li>
-        <li><i class="k turn"></i>changes path</li>
-        <li><i class="k veh"></i>vehicles (bus, car, truck, bike)</li>
-        <li><i class="k night"></i>night</li>
-      </ul>
-    </div>
-    <div class="lgscroll"><svg id="lg"></svg></div>
-  </section>
-
-  <section class="futures" aria-label="Plausible futures">
-    <div class="fhead">
-      <h2>Plausible futures</h2>
-      <p id="fsub"></p>
-    </div>
-    <svg id="br" viewBox="0 0 1100 200"></svg>
-  </section>
-
-  <section class="rec" id="rec" aria-label="Recommendation"></section>
 </main>
 
 <script src="cache.js"></script>

@@ -10,6 +10,24 @@ people do next, and splits day from night, so lighting can show up as a future a
 
 Links are associations, not causes. Every branch says how many real clips support it.
 
+Demo video: TBD
+
+Live app: TBD
+
+## Stack
+
+Footage lives in VAST. NVIDIA Cosmos3-Reason writes the behavior captions, Cosmos Embed1 powers search,
+and YOLO11 handles detection, all on CoreWeave GPUs. Agent reasoning runs on W&B Inference by CoreWeave,
+every step is traced in Weave, and a Weave evaluation checks that the agent never overclaims.
+
+## Who it's for
+
+- Plaza and park designers: see where people actually stop, sit and linger before moving a bench.
+- City planners and transit agencies: see how bus arrivals and crossings shape the sidewalk around a stop.
+- Campus facilities: find the edges and corners where people gather between classes.
+- Retail and venues: see how people queue, wait and pass by storefronts and entrances.
+- Accessibility reviewers: check that every proposed change keeps the clear walking path open.
+
 Laptop setup and the laptop-to-VM loop: see SETUP_LAPTOP.md.
 
 ## Re-ingest prompt (726 characters)

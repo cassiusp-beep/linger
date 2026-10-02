@@ -1,353 +1,352 @@
-/* Linger UI. Reads api/cached (or window.LINGER_CACHE when opened as a file),
-   POSTs api/ask for a live run, and falls back to the recorded run if that fails. */
+/* Linger UI: a four-step story in plain language. Data comes from api/cached (or cache.js offline). */
 const NS = "http://www.w3.org/2000/svg";
 const STAY = new Set(["stop", "stand", "sit", "linger"]);
 const ZONES = ["TL","TC","TR","ML","C","MR","BL","BC","BR"];
-const VERB = {walk:"walking", stop:"stopping", stand:"standing", sit:"sitting", linger:"lingering", path_change:"changing path",
-  bus_arrive:"arriving", crosswalk_block:"blocking the crosswalk", vehicle_stop:"stopping"};
-const isVeh = (e) => e.actor === "vehicle";
-let light = "all";   // all | day | night
+const POS = {TL:"top left", TC:"top middle", TR:"top right", ML:"left middle", C:"center", MR:"right middle", BL:"bottom left", BC:"bottom middle", BR:"bottom right"};
+const PAST = {walk:"walked by", stop:"stopped", stand:"stood", sit:"sat", linger:"lingered", path_change:"changed path",
+  bus_arrive:"arrived", crosswalk_block:"blocked the crosswalk", vehicle_stop:"stopped"};
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const C = {ink:"#15201C", muted:"#5B6964", link:"#D2731A", future:"#2E62C9", night:"#ECEBF8", green:"#0E6B4F"};
 
-let D = null;          // current result
-let sel = {kind:null, id:null};
-let byEv = {}, bySeg = {};
+let D, byEv = {}, bySeg = {}, ZNAME = {}, ZFEAT = {};
+let sel = {kind: null, id: null}, light = "all", showAll = false;
 
 const $ = (s) => document.querySelector(s);
-const el = (tag, attrs = {}, parent) => {
-  const n = document.createElementNS(NS, tag);
-  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
-  if (parent) parent.appendChild(n);
-  return n;
-};
-const html = (s) => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const clock = (t) => `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,"0")}`;
-const who = (e) => isVeh(e) ? `a ${e.vehicle || "vehicle"}` : (e.count === 1 ? "1 person" : `${e.count} people`);
-const say = (e) => `${who(e)} ${VERB[e.behavior]} at ${e.zone}${e.near ? " near the " + e.near : ""}`;
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); if (parent) parent.appendChild(n); return n; };
+const cap = (s) => s ? s[0].toUpperCase() + s.slice(1) : s;
+const clock = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+const isVeh = (e) => e.actor === "vehicle";
+const camEvents = () => D.events.filter(e => e.camera_id === D.camera_id);
 
-/* ---------- data loading ---------- */
-async function load() {
-  try {
-    const r = await fetch("api/cached");
-    if (!r.ok) throw 0;
-    return await r.json();
-  } catch { return window.LINGER_CACHE; }
+/* ---------- plain-language naming ---------- */
+function nameZones() {
+  const counts = {};
+  camEvents().forEach(e => { if (e.near) { counts[e.zone] = counts[e.zone] || {}; counts[e.zone][e.near] = (counts[e.zone][e.near] || 0) + 1; } });
+  const claims = [];
+  for (const [z, m] of Object.entries(counts)) for (const [f, n] of Object.entries(m)) claims.push([n, z, f]);
+  claims.sort((a, b) => b[0] - a[0]);
+  const usedF = new Set(); ZFEAT = {};
+  for (const [, z, f] of claims) if (!ZFEAT[z] && !usedF.has(f)) { ZFEAT[z] = f; usedF.add(f); }
+  ZONES.forEach(z => ZNAME[z] = ZFEAT[z] ? `the ${ZFEAT[z]}` : `the ${POS[z]} area`);
 }
-
-function index(d) {
-  byEv = Object.fromEntries(d.events.map(e => [e.id, e]));
-  bySeg = Object.fromEntries(d.segments.map(s => [s.segment_id, s]));
-}
-
-/* ---------- camera view ---------- */
-const VW = 640, VH = 360;
-const zc = (z) => { const i = ZONES.indexOf(z); return [(i % 3 + .5) * VW / 3, (Math.floor(i / 3) + .5) * VH / 3]; };
-
-function drawView(highlight = []) {
-  const svg = $("#zones"); svg.innerHTML = "";
-  const stats = {};
-  D.events.filter(e => e.camera_id === D.camera_id && STAY.has(e.behavior) && (light === "all" || e.light === light))
-    .forEach(e => stats[e.zone] = (stats[e.zone] || 0) + e.count);
-  const max = Math.max(1, ...Object.values(stats));
-  const nearBy = {};
-  D.events.filter(e => e.camera_id === D.camera_id && e.near).forEach(e => {
-    nearBy[e.zone] = nearBy[e.zone] || {}; nearBy[e.zone][e.near] = (nearBy[e.zone][e.near] || 0) + 1; });
-  const hz = new Set(highlight.map(e => e.zone));
-  ZONES.forEach((z, i) => {
-    const x = (i % 3) * VW / 3, y = Math.floor(i / 3) * VH / 3;
-    const v = (stats[z] || 0) / max;
-    el("rect", {x, y, width: VW/3, height: VH/3, fill: "#F2C230", "fill-opacity": (.05 + .35 * v).toFixed(2)}, svg);
-    if (hz.has(z)) el("rect", {x: x+2, y: y+2, width: VW/3-4, height: VH/3-4, fill: "none", stroke: "#F2C230", "stroke-width": 3}, svg);
-    const t = el("text", {x: x + 10, y: y + 22, fill: "#E9E7E0", "font-size": 15, "font-weight": 800}, svg); t.textContent = z;
-    const near = nearBy[z] && Object.entries(nearBy[z]).sort((a,b) => b[1]-a[1])[0][0];
-    if (near) { const n = el("text", {x: x + 10, y: y + 40, fill: "#9BA2A6", "font-size": 12}, svg); n.textContent = near; }
-    if (stats[z]) { const c = el("text", {x: x + VW/3 - 10, y: y + VH/3 - 10, fill: "#E9E7E0", "font-size": 12, "text-anchor": "end"}, svg);
-      c.textContent = `${stats[z]} ${stats[z] === 1 ? "stay" : "stays"}`; }
+function plain(text) {
+  if (!text) return "";
+  let t = text;
+  ZONES.filter(z => z !== "C").forEach(z => {
+    const f = ZFEAT[z];
+    const re = f ? new RegExp(`\\b${z}\\b(,)?( (beside|by|near) the ${f})?`, "g") : new RegExp(`\\b${z}\\b`, "g");
+    t = t.replace(re, (m, comma) => ZNAME[z] + (comma || ""));
   });
-  for (let k = 1; k < 3; k++) {
-    el("line", {x1: k*VW/3, y1: 0, x2: k*VW/3, y2: VH, stroke: "#E9E7E0", "stroke-width": 2, "stroke-dasharray": "14 10", opacity: .5}, svg);
-    el("line", {x1: 0, y1: k*VH/3, x2: VW, y2: k*VH/3, stroke: "#E9E7E0", "stroke-width": 2, "stroke-dasharray": "14 10", opacity: .5}, svg);
-  }
-  highlight.forEach((e, j) => {
-    const [cx, cy] = zc(e.zone);
+  t = t.replace(/\b(at|over|by) C\b/g, (m, w) => `${w} ${ZNAME.C}`);
+  return t.replace(/\bthe the\b/g, "the");
+}
+function who(e) { return isVeh(e) ? `A ${e.vehicle || "vehicle"}` : (e.count === 1 ? "1 person" : `${e.count} people`); }
+function say(e) {
+  const place = e.behavior === "crosswalk_block" ? "" : ` at ${ZNAME[e.zone]}`;
+  return `${who(e)} ${PAST[e.behavior] || e.behavior}${place}`;
+}
+function gapText(dt) { const s = Math.round(dt); return s <= 1 ? "Right after" : `${s} seconds later`; }
+
+/* ---------- data ---------- */
+async function load() {
+  try { const r = await fetch("api/cached"); if (!r.ok) throw 0; return await r.json(); }
+  catch { return window.LINGER_CACHE; }
+}
+function index() {
+  byEv = Object.fromEntries(D.events.map(e => [e.id, e]));
+  bySeg = Object.fromEntries(D.segments.map(s => [s.segment_id, s]));
+  nameZones();
+}
+function stays(filter = light) {
+  const out = {};
+  camEvents().filter(e => STAY.has(e.behavior) && (filter === "all" || e.light === filter))
+    .forEach(e => out[e.zone] = (out[e.zone] || 0) + e.count);
+  return out;
+}
+
+/* ---------- step 1: where people stop ---------- */
+function drawStreet() {
+  const svg = $("#street"); svg.innerHTML = "";
+  const st = stays(), max = Math.max(1, ...Object.values(st));
+  const hz = highlightZones();
+  ZONES.forEach((z, i) => {
+    const x = (i % 3) * 640 / 3, y = Math.floor(i / 3) * 120, w = 640 / 3, h = 120, v = (st[z] || 0) / max;
+    el("rect", {x, y, width: w, height: h, fill: "#E58A2E", "fill-opacity": (0.06 + 0.62 * v).toFixed(2)}, svg);
+    el("rect", {x: x + .5, y: y + .5, width: w - 1, height: h - 1, fill: "none", stroke: "#FFFFFF", "stroke-opacity": .35}, svg);
+    if (hz.zones.has(z)) el("rect", {x: x + 3, y: y + 3, width: w - 6, height: h - 6, rx: 6, fill: "none", stroke: "#FFFFFF", "stroke-width": 4}, svg);
+    const label = ZFEAT[z] ? cap(ZFEAT[z]) : "";
+    if (label) {
+      const t = el("text", {x: x + 12, y: y + 24, fill: "#FFFFFF", "font-size": 15, "font-weight": 700}, svg); t.textContent = label;
+    }
+    if (st[z]) { const c = el("text", {x: x + w - 12, y: y + h - 12, fill: "#FFFFFF", "font-size": 14, "font-weight": 800, "text-anchor": "end"}, svg);
+      c.textContent = `${st[z]} ${st[z] === 1 ? "stop" : "stops"}`; }
+  });
+  hz.events.forEach((e, j) => {
+    const i = ZONES.indexOf(e.zone), cx = (i % 3 + .5) * 640 / 3, cy = (Math.floor(i / 3) + .5) * 120;
     if (isVeh(e)) {
-      el("rect", {x: cx - 22, y: cy - 34, width: 44, height: 24, rx: 3, fill: "none", stroke: "#E9E7E0", "stroke-width": 2.5}, svg);
-      const t = el("text", {x: cx, y: cy - 17, fill: "#E9E7E0", "font-size": 11, "text-anchor": "middle"}, svg); t.textContent = e.vehicle || "vehicle";
+      el("rect", {x: cx - 26, y: cy - 30, width: 52, height: 24, rx: 6, fill: "#FFFFFF"}, svg);
+      const t = el("text", {x: cx, y: cy - 13, fill: C.ink, "font-size": 12, "font-weight": 700, "text-anchor": "middle"}, svg); t.textContent = e.vehicle || "vehicle";
       return;
     }
     for (let p = 0; p < Math.min(e.count, 6); p++) {
-      const a = (p / Math.max(1, e.count)) * Math.PI * 2 + j;
-      el("circle", {cx: cx + Math.cos(a) * 18 * (e.count > 1), cy: cy + 18 + Math.sin(a) * 12 * (e.count > 1), r: 6,
-        fill: STAY.has(e.behavior) ? "#E9E7E0" : "none", stroke: e.behavior === "path_change" ? "#F2C230" : "#E9E7E0", "stroke-width": 2}, svg);
+      el("circle", {cx: cx - (Math.min(e.count, 6) - 1) * 9 + p * 18, cy: cy + 14 + j * 4, r: 7,
+        fill: STAY.has(e.behavior) ? "#FFFFFF" : "none", stroke: "#FFFFFF", "stroke-width": 2.5}, svg);
     }
   });
 }
-
-function playSegment(segId, t = 0) {
-  const s = bySeg[segId], v = $("#clip");
-  if (s && s.clip_url) {
-    if (v.getAttribute("src") !== s.clip_url) v.src = s.clip_url;
-    v.currentTime = t; v.classList.add("on"); v.play().catch(() => {});
-    $("#viewCaption").textContent = `Playing ${segId} from ${s.camera_id}.`;
-  } else {
-    v.classList.remove("on");
-    $("#viewCaption").textContent = s ? `${segId} on ${s.camera_id}: ${s.caption}` : "";
+function drawRank() {
+  const st = stays(), nightSt = stays("night"), total = Object.values(st).reduce((a, b) => a + b, 0);
+  const rows = Object.entries(st).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const max = Math.max(1, ...rows.map(r => r[1]));
+  $("#rank").innerHTML = rows.map(([z, n]) => {
+    const nn = nightSt[z] || 0;
+    const sub = light === "all" ? `${POS[z]} of the view${nn ? `, ${nn} at night` : ""}` : `${POS[z]} of the view`;
+    return `<li data-zone="${z}" class="${sel.kind === "zone" && sel.id === z ? "on" : ""}" tabindex="0">
+      <span class="nm">${esc(cap(ZNAME[z]))}</span><span class="ct">${n}</span>
+      <span class="bar2"><i style="width:${(n / max * 100).toFixed(0)}%"></i></span><span class="sub">${esc(sub)}</span></li>`;
+  }).join("") || `<li>No stops ${light === "night" ? "at night" : "in the daytime"} on this camera.</li>`;
+  document.querySelectorAll("#rank li[data-zone]").forEach(li => {
+    li.onclick = () => select("zone", li.dataset.zone);
+    li.onkeydown = (k) => { if (k.key === "Enter") select("zone", li.dataset.zone); };
+  });
+  if (rows.length) {
+    const [z, n] = rows[0], nn = stays("night")[z] || 0, all = stays("all")[z] || 0;
+    const when = light === "all" ? "" : light === "night" ? " at night" : " in the daytime";
+    $("#s1lede").textContent = `Most stopping${when} happens at ${ZNAME[z]}: ${n} of ${total} stops.` +
+      (light === "all" && all ? ` ${Math.round(nn / all * 100)}% of those are at night.` : "");
   }
 }
 
-/* ---------- linkograph ---------- */
-function drawLinkograph(animate = false) {
+/* ---------- step 2: what tends to happen next ---------- */
+function keyPairs() {
+  const L = D.links, pick = [], usedZ = new Set();
+  const add = (l) => { if (l && !pick.includes(l)) { pick.push(l); usedZ.add(byEv[l.from].zone + byEv[l.to].zone); } };
+  add(L.find(l => l.id === D.selected_link));
+  add([...L].filter(l => isVeh(byEv[l.from]) && byEv[l.to].behavior === "path_change").sort((a, b) => b.score - a.score)[0]);
+  add([...L].filter(l => STAY.has(byEv[l.from].behavior) && STAY.has(byEv[l.to].behavior) && !usedZ.has(byEv[l.from].zone + byEv[l.to].zone))
+    .sort((a, b) => b.score - a.score)[0]);
+  return pick.slice(0, 3);
+}
+function drawPairs() {
+  $("#pairs").innerHTML = keyPairs().map(l => {
+    const a = byEv[l.from], b = byEv[l.to];
+    const where = l.zone_rel === "same" ? "Same spot" : "Next to each other";
+    const when = a.light === "night" ? "at night" : a.light === "day" ? "in the daytime" : "";
+    return `<button class="pair ${sel.kind === "link" && sel.id === l.id ? "on" : ""}" data-link="${l.id}">
+      <span class="a">${esc(say(a))}</span><span class="gap">${gapText(l.dt)}</span><span class="b">${esc(say(b))}</span>
+      <span class="tag">${where}${when ? ", " + when : ""}${l.id === D.selected_link ? ". Linger explores this one below." : ""}</span></button>`;
+  }).join("");
+  document.querySelectorAll(".pair").forEach(b => b.onclick = () => select("link", b.dataset.link));
+}
+function drawTimeline(animate = false) {
   const svg = $("#lg"); svg.innerHTML = "";
-  const ev = D.events.filter(e => e.camera_id === D.camera_id);
-  const idx = Object.fromEntries(ev.map((e, i) => [e.id, i]));
-  const links = D.links.filter(l => l.from in idx && l.to in idx);
-  const padX = 30, H = 250, base = H - 44;
-  const avail = (svg.parentElement.clientWidth || 900) - padX * 2;
-  const sp = Math.max(22, Math.min(40, avail / Math.max(1, ev.length - 1)));
-  const W = padX * 2 + (ev.length - 1) * sp;
+  const ev = camEvents(), idx = Object.fromEntries(ev.map((e, i) => [e.id, i]));
+  const all = D.links.filter(l => l.from in idx && l.to in idx);
+  const keep = new Set([...all].sort((a, b) => b.score - a.score).slice(0, 16).map(l => l.id));
+  keyPairs().forEach(l => keep.add(l.id)); if (sel.kind === "link") keep.add(sel.id);
+  const links = showAll ? all : all.filter(l => keep.has(l.id));
+  const padX = 26, H = 220, base = H - 40;
+  const avail = (svg.parentElement.clientWidth || 800) - padX * 2;
+  const sp = Math.max(20, Math.min(44, avail / Math.max(1, ev.length - 1)));
+  const W = padX * 2 + (ev.length - 1) * sp, X = (i) => padX + i * sp;
   const maxSpan = Math.max(1, ...links.map(l => idx[l.to] - idx[l.from]));
-  const k = Math.min(1, (base - 16) / (maxSpan * sp / 2));
+  const k = Math.min(8, (base - 24) * 2 / Math.max(1, maxSpan * sp));  // tallest arc nearly fills the panel
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.style.width = W + "px";
-  const X = (i) => padX + i * sp;
-  const crit = new Set(D.critical);
 
-  // time ticks
-  let lastLabel = -99;
+  let run = null;
   ev.forEach((e, i) => {
-    if (e.t - lastLabel >= 20) { lastLabel = e.t;
-      const t = el("text", {x: X(i), y: H - 8, fill: "#9BA2A6", "font-size": 11, "text-anchor": "middle"}, svg); t.textContent = clock(e.t); }
+    const n = e.light === "night", end = i === ev.length - 1 || ev[i + 1].light !== "night";
+    if (n && run === null) run = i;
+    if (n && end) { const x1 = X(run) - sp / 2, x2 = X(i) + sp / 2;
+      el("rect", {x: x1, y: 0, width: x2 - x1, height: H, fill: C.night}, svg);
+      const t = el("text", {x: x2 - 8, y: 16, fill: "#34307E", "font-size": 11, "font-weight": 700, "text-anchor": "end"}, svg); t.textContent = "Night";
+      run = null; }
   });
-  // shade runs of night events so day and night read at a glance
-  let runStart = null;
-  ev.forEach((e, i) => {
-    const night = e.light === "night", end = i === ev.length - 1 || ev[i + 1].light !== "night";
-    if (night && runStart === null) runStart = i;
-    if (night && end) {
-      const x1 = X(runStart) - sp / 2, x2 = X(i) + sp / 2;
-      el("rect", {x: x1, y: 0, width: x2 - x1, height: H - 22, fill: "#3A5A8C", "fill-opacity": .18}, svg);
-      const t = el("text", {x: x2 - 8, y: 16, fill: "#9BB4D6", "font-size": 11, "text-anchor": "end"}, svg); t.textContent = "night";
-      runStart = null;
-    }
-  });
-  el("line", {x1: padX - 12, y1: base, x2: W - padX + 12, y2: base, stroke: "#454B4F"}, svg);
+  let last = -99;
+  ev.forEach((e, i) => { if (e.t - last >= 20) { last = e.t;
+    const t = el("text", {x: X(i), y: H - 6, fill: C.muted, "font-size": 11, "text-anchor": "middle"}, svg); t.textContent = clock(e.t); } });
+  el("line", {x1: padX - 10, y1: base, x2: W - padX + 10, y2: base, stroke: "#C9D1CD"}, svg);
 
-  const gl = el("g", {}, svg);
   links.forEach((l, n) => {
     const i = idx[l.from], j = idx[l.to];
-    const ax = (X(i) + X(j)) / 2, ay = base - (X(j) - X(i)) / 2 * k;
-    const isSel = sel.kind === "link" && sel.id === l.id, isAgent = l.id === D.selected_link;
-    const g = el("g", {class: "lk", tabindex: 0, role: "button", "aria-label": l.rationale}, gl);
-    const p = el("polyline", {points: `${X(i)},${base} ${ax},${ay} ${X(j)},${base}`, fill: "none",
-      stroke: "#F2C230", "stroke-width": isSel ? 2.6 : 1, "stroke-opacity": isSel ? 1 : (0.15 + 0.45 * (l.score - .5) / .5).toFixed(2)}, g);
-    const d = 4 + (isSel || isAgent ? 2 : 0);
-    el("path", {d: `M${ax},${ay-d} L${ax+d},${ay} L${ax},${ay+d} L${ax-d},${ay} Z`,
-      fill: isSel ? "#F2C230" : isAgent ? "#5FB7C6" : "#24272A", stroke: isAgent && !isSel ? "#5FB7C6" : "#F2C230", "stroke-width": 1.2}, g);
-    el("circle", {cx: ax, cy: ay, r: 10, fill: "transparent"}, g);
-    if (animate && !reduced) {
-      const len = (X(j) - X(i)) * 1.5 + 20;
+    const on = sel.kind === "link" && sel.id === l.id, key = l.id === D.selected_link;
+    const g = el("g", {tabindex: 0, role: "button", "aria-label": `${say(byEv[l.from])}, then ${say(byEv[l.to])}`, style: "cursor:pointer"}, svg);
+    const p = el("path", {d: `M${X(i)},${base} Q${(X(i) + X(j)) / 2},${base - (X(j) - X(i)) * k} ${X(j)},${base}`,
+      fill: "none", stroke: C.link, "stroke-width": on ? 3.5 : key ? 2.5 : 1.4, "stroke-opacity": on || key ? 1 : 0.45}, g);
+    el("path", {d: p.getAttribute("d"), fill: "none", stroke: "transparent", "stroke-width": 10}, g);
+    if (animate && !reduced) { const len = p.getTotalLength();
       p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
-      p.style.transition = `stroke-dashoffset 500ms ease ${Math.min(n * 12, 900)}ms`;
-      requestAnimationFrame(() => requestAnimationFrame(() => p.style.strokeDashoffset = 0));
-    }
-    g.addEventListener("click", () => select("link", l.id));
-    g.addEventListener("keydown", (e) => { if (e.key === "Enter") select("link", l.id); });
-    g.addEventListener("mouseenter", () => drawView([byEv[l.from], byEv[l.to]]));
+      p.style.transition = `stroke-dashoffset 450ms ease ${Math.min(n * 15, 700)}ms`;
+      requestAnimationFrame(() => requestAnimationFrame(() => p.style.strokeDashoffset = 0)); }
+    g.onclick = () => select("link", l.id);
+    g.onkeydown = (k2) => { if (k2.key === "Enter") select("link", l.id); };
   });
-
   ev.forEach((e, i) => {
-    const r = 3.5 + Math.min(9, e.degree * 0.7);
-    const isSel = (sel.kind === "event" && sel.id === e.id) ||
-                  (sel.kind === "link" && D.links.some(l => l.id === sel.id && (l.from === e.id || l.to === e.id)));
-    const g = el("g", {tabindex: 0, role: "button", "aria-label": say(e)}, svg);
-    if (crit.has(e.id)) el("circle", {cx: X(i), cy: base, r: r + 5, fill: "none", stroke: "#F2C230", "stroke-width": 2}, g);
-    if (isVeh(e)) {
-      el("rect", {x: X(i) - r, y: base - r, width: 2 * r, height: 2 * r, fill: "#24272A", stroke: "#E9E7E0", "stroke-width": isSel ? 3 : 2}, g);
-      el("line", {x1: X(i) - r + 2, y1: base, x2: X(i) + r - 2, y2: base, stroke: "#E9E7E0", "stroke-width": 1.5}, g);
-    } else el("circle", {cx: X(i), cy: base, r,
-      fill: STAY.has(e.behavior) ? "#E9E7E0" : "#24272A",
-      stroke: e.behavior === "path_change" ? "#F2C230" : "#E9E7E0", "stroke-width": isSel ? 3 : 1.5}, g);
-    const z = el("text", {x: X(i), y: base + 18 + (i % 2) * 0, fill: isSel ? "#F2C230" : "#9BA2A6", "font-size": 10, "text-anchor": "middle"}, g);
-    z.textContent = e.zone;
-    g.addEventListener("mouseenter", () => drawView([e]));
-    g.addEventListener("click", () => select("event", e.id));
-    g.addEventListener("keydown", (k2) => { if (k2.key === "Enter") select("event", e.id); });
+    const r = 4 + Math.min(6, e.degree * 0.5);
+    const on = (sel.kind === "event" && sel.id === e.id) || (sel.kind === "zone" && sel.id === e.zone) ||
+      (sel.kind === "link" && D.links.some(l => l.id === sel.id && (l.from === e.id || l.to === e.id)));
+    const g = el("g", {tabindex: 0, role: "button", "aria-label": say(e), style: "cursor:pointer"}, svg);
+    if (on) el("circle", {cx: X(i), cy: base, r: r + 5, fill: C.link, "fill-opacity": .2}, g);
+    if (isVeh(e)) el("rect", {x: X(i) - r, y: base - r, width: 2 * r, height: 2 * r, rx: 2, fill: "#fff", stroke: C.ink, "stroke-width": 2}, g);
+    else el("circle", {cx: X(i), cy: base, r, fill: STAY.has(e.behavior) ? C.ink : "#fff",
+      stroke: e.behavior === "path_change" ? C.link : C.ink, "stroke-width": e.behavior === "path_change" ? 2.5 : 1.5}, g);
+    el("circle", {cx: X(i), cy: base, r: 12, fill: "transparent"}, g);
+    g.onclick = () => select("event", e.id);
+    g.onkeydown = (k2) => { if (k2.key === "Enter") select("event", e.id); };
   });
-  svg.addEventListener("mouseleave", () => drawView(currentHighlight()));
 }
 
-function currentHighlight() {
-  if (sel.kind === "event") return [byEv[sel.id]];
-  if (sel.kind === "link") { const l = D.links.find(x => x.id === sel.id); return l ? [byEv[l.from], byEv[l.to]] : []; }
-  return [];
-}
-
-/* ---------- futures ---------- */
-function drawBranches(animate = false) {
-  const svg = $("#br"); svg.innerHTML = "";
+/* ---------- step 3: what could change ---------- */
+const WHEN = {"+0m": "Right away", "+10m": "After 10 min", "+30m": "After 30 min"};
+function drawOptions() {
   const l = D.links.find(x => x.id === D.selected_link);
-  const a = byEv[l.from], b = byEv[l.to];
-  $("#fsub").innerHTML = `Branched from the agent's selected link at ${clock(a.t)}: ${html(l.rationale)} ` +
-    `<button class="linkbtn" id="showLink">Show this link</button>`;
-  $("#showLink").onclick = () => select("link", l.id);
-
-  const x0 = 60, y0 = 100, xs = [210, 390, 570];
-  el("circle", {cx: x0, cy: y0, r: 8, fill: "#F2C230"}, svg);
-  const t0 = el("text", {x: x0, y: y0 + 26, fill: "#9BA2A6", "font-size": 12, "text-anchor": "middle"}, svg); t0.textContent = "now";
-  const offsets = {baseline: 0}; let up = -1;
-  D.branches.forEach((br) => {
-    const dy = br.kind === "baseline" ? 0 : (up *= -1, up) * -62;
-    const isSel = sel.kind === "branch" && sel.id === br.id;
-    const color = br.kind === "baseline" ? "#8B9196" : "#5FB7C6";
-    const g = el("g", {class: "branch", tabindex: 0, role: "button", "aria-label": `${br.intervention}, ${br.label}`}, svg);
-    const d = dy === 0 ? `M${x0},${y0} L${xs[2]},${y0}` :
-      `M${x0},${y0} C${x0 + 90},${y0} ${xs[0] - 60},${y0 + dy} ${xs[0]},${y0 + dy} L${xs[2]},${y0 + dy}`;
-    const p = el("path", {d, class: "bl", fill: "none", stroke: color, "stroke-width": isSel ? 4.5 : 2.5,
-      "stroke-dasharray": br.kind === "baseline" ? "8 6" : "none"}, g);
-    if (animate && !reduced && br.kind !== "baseline") {
-      p.style.strokeDasharray = 900; p.style.strokeDashoffset = 900; p.style.transition = "stroke-dashoffset 600ms ease";
-      requestAnimationFrame(() => requestAnimationFrame(() => p.style.strokeDashoffset = 0));
-    }
-    xs.forEach((x, i) => {
-      el("circle", {cx: x, cy: y0 + dy, r: 5, fill: "#1C1F21", stroke: color, "stroke-width": 2}, g);
-      const tl = el("text", {x, y: y0 + dy - 10, fill: "#9BA2A6", "font-size": 11, "text-anchor": "middle"}, g);
-      tl.textContent = br.timeline[i] ? br.timeline[i].t : "";
-    });
-    const words = br.intervention.split(" "), lines = [""];
-    words.forEach(w => { if ((lines[lines.length - 1] + " " + w).length > 52 && lines.length < 2) lines.push(w);
-      else lines[lines.length - 1] = (lines[lines.length - 1] + " " + w).trim(); });
-    const ty = y0 + dy - (lines.length > 1 ? 10 : 2);
-    lines.forEach((ln, i) => { const t = el("text", {x: xs[2] + 22, y: ty + i * 17, fill: isSel ? "#F2C230" : "#E9E7E0", "font-size": 14, "font-weight": 600}, g); t.textContent = ln; });
-    const lab = el("text", {x: xs[2] + 22, y: ty + (lines.length - 1) * 17 + 17, fill: color, "font-size": 12}, g);
-    lab.textContent = br.label;
-    el("rect", {x: x0, y: y0 + dy - 28, width: 1090 - x0, height: 50, fill: "transparent"}, g);
-    g.addEventListener("click", () => select("branch", br.id));
-    g.addEventListener("keydown", (e) => { if (e.key === "Enter") select("branch", br.id); });
-  });
+  $("#s3lede").textContent = l ? `Starting from the pattern "${say(byEv[l.from])}, then ${say(byEv[l.to]).toLowerCase()}", Linger imagines what happens next under each option. Each one shows how many real clips back it up.` : "";
+  $("#options").innerHTML = D.branches.map(br => `
+    <button class="opt ${br.kind === "baseline" ? "base" : ""} ${sel.kind === "branch" && sel.id === br.id ? "on" : ""}" data-branch="${br.id}">
+      <span class="kind">${br.kind === "baseline" ? "Keep as is" : "Change the street"}</span>
+      <h3>${esc(plain(br.kind === "baseline" ? "Leave the street as it is" : br.intervention))}</h3>
+      <p class="pred">${esc(cap(plain(br.prediction)))}</p>
+      <dl class="steps">${br.timeline.map(t => `<dt><b>${WHEN[t.t] || t.t}</b></dt><dd>${esc(cap(plain(t.state)))}</dd>`).join("")}</dl>
+      <p class="risk"><b>Watch out:</b> ${esc(cap(plain(br.risk)))}</p>
+      <span class="badge">Based on ${br.plausibility_n} clips</span>
+    </button>`).join("");
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => select("branch", b.dataset.branch));
 }
 
-/* ---------- details panel ---------- */
-function evidenceList(items) {
-  return items.map(c => {
-    const s = bySeg[c.segment_id] || {};
-    return `<div class="ev"><strong>${html(c.segment_id)}</strong><span class="tag ${c.match}">${c.match === "same_space" ? "same camera" : "similar space"}</span>
-      <div class="cap">${html(s.caption || "")}</div>
-      <button data-play="${html(c.segment_id)}">${s.clip_url ? "Play clip" : "Show in view"}</button></div>`;
-  }).join("");
-}
-
-function details() {
-  const box = $("#details");
-  if (sel.kind === "link") {
-    const l = D.links.find(x => x.id === sel.id), a = byEv[l.from], b = byEv[l.to];
-    box.innerHTML = `<h3>${html(l.rationale)}</h3><span class="assoc">Association, not cause</span>
-      <dl class="facts"><dt>Link</dt><dd>${l.id}, ${l.type}</dd><dt>Time apart</dt><dd>${l.dt}s</dd>
-      <dt>Zones</dt><dd>${a.zone} to ${b.zone} (${l.zone_rel})</dd><dt>Score</dt><dd>${l.score}</dd></dl>
-      <div class="ev"><strong>${clock(a.t)}</strong> ${html(say(a))}<br><button data-play="${a.segment_id}">Show moment</button></div>
-      <div class="ev"><strong>${clock(b.t)}</strong> ${html(say(b))}<br><button data-play="${b.segment_id}">Show moment</button></div>
-      ${l.id === D.selected_link ? "" : `<p class="hint" style="margin-top:12px">The agent branched link ${D.selected_link}. Ask again to explore a different moment.</p>`}`;
-  } else if (sel.kind === "event") {
-    const e = byEv[sel.id];
-    const n = D.links.filter(l => l.from === e.id || l.to === e.id);
-    box.innerHTML = `<h3>${html(say(e))}</h3>
-      <dl class="facts"><dt>Time</dt><dd>${clock(e.t)}</dd><dt>Segment</dt><dd>${e.segment_id}</dd><dt>Light</dt><dd>${e.light || "unknown"}</dd>
-      <dt>Links</dt><dd>${n.length}${D.critical.includes(e.id) ? ", critical move" : ""}</dd></dl>
-      ${n.slice(0, 6).map(l => `<div class="ev"><button class="linkbtn" data-link="${l.id}">${html(l.rationale)}</button></div>`).join("")}
-      <div class="ev"><button data-play="${e.segment_id}">Show moment</button></div>`;
-  } else if (sel.kind === "branch") {
-    const br = D.branches.find(x => x.id === sel.id);
-    box.innerHTML = `<h3>${html(br.intervention)}</h3><span class="assoc">${html(br.label)}</span>
-      <p>${html(br.prediction)}</p>
-      <dl class="facts" style="margin-top:12px">${br.timeline.map(t => `<dt>${t.t}</dt><dd>${html(t.state)}</dd>`).join("")}
-      <dt>Risk</dt><dd>${html(br.risk)}</dd></dl>${evidenceList(br.evidence)}`;
-  } else if (sel.kind === "rec") {
-    const r = D.recommendation;
-    box.innerHTML = `<h3>Evidence for the recommendation</h3><span class="assoc">${html(r.label)}</span>
-      ${evidenceList(r.segment_ids.map(id => D.evidence.find(x => x.segment_id === id) || {segment_id: id, match: "same_space"}))}`;
-  } else {
-    box.innerHTML = `<p class="hint">Hover dots in the linkograph to see where each behavior happened. Select a yellow peak to read a link, or a future to see the clips behind it.</p>`;
-  }
-  box.querySelectorAll("[data-play]").forEach(b => b.onclick = () => {
-    const id = b.dataset.play; const e = D.events.find(x => x.segment_id === id);
-    playSegment(id); drawView(D.events.filter(x => x.segment_id === id));
-  });
-  box.querySelectorAll("[data-link]").forEach(b => b.onclick = () => select("link", b.dataset.link));
-}
-
-function select(kind, id) {
-  sel = {kind, id};
-  tab("details");
-  drawLinkograph(); drawBranches(); details(); drawView(currentHighlight());
-}
-
-/* ---------- agent steps ---------- */
-function stepsHTML(steps, shown = steps.length) {
-  return steps.map((s, i) => `<div class="step ${s.mode !== "ok" ? "fb" : ""} ${i >= shown ? "pending" : ""}">
-    <span class="n">${i + 1}</span><span class="t">${html(s.step)}</span><span class="ms">${i < shown ? s.ms + " ms" : ""}</span>
-    <span class="tool">${html(s.tool)}${s.mode !== "ok" ? ", " + html(s.mode) : ""}</span>
-    <span class="s">${i < shown ? html(s.summary) : ""}</span></div>`).join("") +
-    (D && D.fallback ? `<p class="hint" style="margin-top:10px">The live run did not finish in time, so this is the last recorded run.</p>` : "");
-}
-
-async function replaySteps(steps) {
-  const box = $("#steps");
-  for (let i = 0; i <= steps.length; i++) {
-    box.innerHTML = stepsHTML(steps, i);
-    if (i < steps.length) await new Promise(r => setTimeout(r, reduced ? 0 : Math.min(900, Math.max(260, steps[i].ms))));
-  }
-}
-
-function tab(name) {
-  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name));
-  $("#details").hidden = name !== "details"; $("#steps").hidden = name !== "steps";
-}
-document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => tab(b.dataset.tab));
-
-document.querySelectorAll(".lightchips button").forEach(b => b.onclick = () => {
-  light = b.dataset.light;
-  document.querySelectorAll(".lightchips button").forEach(x => x.setAttribute("aria-pressed", x === b));
-  const n = D.events.filter(e => e.camera_id === D.camera_id && STAY.has(e.behavior) && (light === "all" || e.light === light))
-    .reduce((s, e) => s + e.count, 0);
-  $("#viewCaption").textContent = `Zones shaded by ${light === "all" ? "all" : light} stays: ${n} person-stops.`;
-  drawView(currentHighlight());
-});
-
-/* ---------- recommendation ---------- */
+/* ---------- step 4: recommendation ---------- */
 function drawRec() {
   const r = D.recommendation;
-  $("#rec").innerHTML = r ? `<div><p class="what">${html(r.action)}</p><p class="why">${html(r.why)}</p></div>
-    <div style="text-align:right"><p class="lab">${html(r.label)}</p><button id="recEv" style="margin-top:8px">Show evidence</button></div>` :
-    `<p class="hint">No recommendation met the evidence bar (at least 2 clips).</p>`;
+  $("#recbody").innerHTML = r ? `<p class="recwhat">${esc(plain(r.action))}</p><p class="recwhy">${esc(cap(plain(r.why)))}</p>
+    <div class="recrow"><span class="badge">Based on ${r.n} clips</span><button class="btn" id="recEv">See the evidence</button></div>` :
+    `<p class="empty">No option had at least 2 supporting clips, so Linger is not recommending a change yet.</p>`;
   if (r) $("#recEv").onclick = () => select("rec", "rec");
 }
 
-/* ---------- run ---------- */
-function render(animate) {
-  index(D);
-  $("#camLabel").textContent = `${D.camera_id}, ${D.events.length} events, ${D.links.length} links${D.mode === "rules" ? ", rules mode" : ""}`;
-  drawView(); drawLinkograph(animate); drawBranches(animate); details(); drawRec();
+/* ---------- details panel ---------- */
+function clipList(items) {
+  return items.map(c => {
+    const s = bySeg[c.segment_id] || {};
+    const lines = (s.caption || "").match(/\[t=\d+(?:\.\d+)?s\][^\[]+/g) || [];
+    const same = c.match !== "similar_space";
+    return `<div class="clip"><div class="ch"><strong>Clip ${esc(c.segment_id)}</strong>
+      <span class="where ${same ? "same" : "similar"}">${same ? "This camera" : "Similar street"}</span></div>
+      <ul>${clipLines(c.segment_id, lines)}</ul>
+      <button data-play="${esc(c.segment_id)}">${s.clip_url ? "Play clip" : "Show on the street view"}</button></div>`;
+  }).join("");
+}
+function clipLines(id, raw) {
+  const evs = D.events.filter(e => e.segment_id === id);
+  const off = (bySeg[id] || {}).offset || 0;
+  if (evs.length) return evs.slice(0, 4).map(e => `<li>${clock(e.t - off)} ${esc(say(e))}</li>`).join("");
+  return raw.slice(0, 4).map(x => `<li>${esc(plain(x.replace(/\[t=(\d+(?:\.\d+)?)s\]\s*/, (m, t) => clock(+t) + " ").trim()))}</li>`).join("");
+}
+function drawDetail() {
+  const box = $("#detail");
+  if (sel.kind === "link") {
+    const l = D.links.find(x => x.id === sel.id), a = byEv[l.from], b = byEv[l.to];
+    box.innerHTML = `<p class="dtitle">${esc(say(a))}, then ${esc(say(b).toLowerCase())}.</p>
+      <span class="note">A pattern, not proof of cause</span>
+      <dl class="facts"><dt>Time apart</dt><dd>${Math.round(l.dt)} seconds</dd><dt>Where</dt><dd>${l.zone_rel === "same" ? "Same spot" : "Next to each other"}</dd>
+      <dt>When</dt><dd>${clock(a.t)} on the camera's timeline${a.light !== "unknown" ? `, ${a.light === "night" ? "night" : "daytime"}` : ""}</dd>
+      <dt>Strength</dt><dd>${l.score >= .85 ? "Strong" : l.score >= .65 ? "Medium" : "Weak"}</dd></dl>
+      ${clipList([...new Set([a.segment_id, b.segment_id])].map(id => ({segment_id: id, match: "same_space"})))}`;
+  } else if (sel.kind === "event") {
+    const e = byEv[sel.id], n = D.links.filter(l => l.from === e.id || l.to === e.id).length;
+    box.innerHTML = `<p class="dtitle">${esc(say(e))}</p>
+      <dl class="facts"><dt>When</dt><dd>${clock(e.t)}${e.light !== "unknown" ? `, ${e.light === "night" ? "night" : "daytime"}` : ""}</dd>
+      <dt>Connected to</dt><dd>${n} other ${n === 1 ? "moment" : "moments"}</dd></dl>
+      ${clipList([{segment_id: e.segment_id, match: "same_space"}])}`;
+  } else if (sel.kind === "zone") {
+    const z = sel.id, ev = camEvents().filter(e => e.zone === z && !(e.behavior === "walk"));
+    box.innerHTML = `<p class="dtitle">${esc(cap(ZNAME[z]))}</p><span class="note">${POS[z]} of the camera view</span>
+      <dl class="facts"><dt>Stops</dt><dd>${stays("all")[z] || 0} (${stays("night")[z] || 0} at night)</dd>
+      <dt>Moments here</dt><dd>${ev.length}</dd></dl>
+      ${clipList([...new Set(ev.map(e => e.segment_id))].slice(0, 4).map(id => ({segment_id: id, match: "same_space"})))}`;
+  } else if (sel.kind === "branch") {
+    const br = D.branches.find(x => x.id === sel.id);
+    box.innerHTML = `<p class="dtitle">${esc(plain(br.kind === "baseline" ? "Leave the street as it is" : br.intervention))}</p>
+      <span class="note">The clips behind this option</span>${clipList(br.evidence)}`;
+  } else if (sel.kind === "rec") {
+    const r = D.recommendation;
+    box.innerHTML = `<p class="dtitle">Why Linger recommends this</p><span class="note">Based on ${r.n} clips</span>
+      ${clipList(r.segment_ids.map(id => D.evidence.find(x => x.segment_id === id) || {segment_id: id, match: "same_space"}))}`;
+  } else {
+    box.innerHTML = `<h3>Details</h3><p class="empty">Click any area, pattern, moment or option to see the details and the video behind it.</p>`;
+  }
+  box.querySelectorAll("[data-play]").forEach(b => b.onclick = () => play(b.dataset.play));
+}
+function play(id) {
+  const s = bySeg[id], v = $("#clip");
+  if (s && s.clip_url) { if (v.getAttribute("src") !== s.clip_url) v.src = s.clip_url; v.currentTime = 0; v.classList.add("on"); v.play().catch(() => {}); }
+  else v.classList.remove("on");
+  sel = {kind: sel.kind, id: sel.id, seg: id};
+  drawStreet();
+  $("#s1").scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "start"});
+}
+function highlightZones() {
+  let evs = [];
+  if (sel.seg) evs = camEvents().filter(e => e.segment_id === sel.seg);
+  else if (sel.kind === "event") evs = [byEv[sel.id]];
+  else if (sel.kind === "link") { const l = D.links.find(x => x.id === sel.id); evs = [byEv[l.from], byEv[l.to]]; }
+  const zones = new Set(evs.map(e => e.zone));
+  if (sel.kind === "zone") zones.add(sel.id);
+  return {zones, events: evs};
 }
 
+/* ---------- agent steps ---------- */
+function traceHTML(steps, shown = steps.length) {
+  return steps.map((s, i) => `<li class="${i >= shown ? "wait" : ""}"><span class="dot">${i + 1}</span><span class="t">${esc(s.step)}</span>
+    <span class="s">${i < shown ? esc(cap(plain(s.summary))) : ""}${i < shown && s.mode !== "ok" ? ` <span class="fb">(used backup rules)</span>` : ""}</span></li>`).join("");
+}
+async function replay(steps) {
+  for (let i = 0; i <= steps.length; i++) {
+    $("#trace").innerHTML = traceHTML(steps, i);
+    if (i < steps.length) await new Promise(r => setTimeout(r, reduced ? 0 : Math.min(800, Math.max(240, steps[i].ms))));
+  }
+  if (D.fallback) $("#trace").insertAdjacentHTML("afterend", `<p class="banner">The live run took too long, so this shows the last saved run.</p>`);
+}
+function setHow(open) { $("#how").hidden = !open; $("#howBtn").setAttribute("aria-expanded", open); }
+$("#howBtn").onclick = () => setHow($("#how").hidden);
+
+/* ---------- wiring ---------- */
+function select(kind, id) {
+  sel = {kind, id};
+  drawStreet(); drawRank(); drawPairs(); drawTimeline(); drawOptions(); drawDetail();
+}
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
+  light = b.dataset.light;
+  document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  drawStreet(); drawRank();
+});
+$("#allLinks").onchange = (e) => { showAll = e.target.checked; drawTimeline(); };
+addEventListener("resize", () => D && drawTimeline());
+
+function render(animate) {
+  index();
+  const n = camEvents().length, mock = (D.source || "").startsWith("mock");
+  $("#meta").textContent = `Camera ${D.camera_id}, ${n} moments, ${D.links.length} connections${mock ? ", practice data" : ""}`;
+  drawStreet(); drawRank(); drawPairs(); drawTimeline(animate); drawOptions(); drawRec(); drawDetail();
+  $("#trace").innerHTML = traceHTML(D.trace);
+}
 $("#askForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
-  const btn = $("#askBtn"); btn.disabled = true; btn.textContent = "Working";
-  tab("steps"); $("#steps").innerHTML = `<p class="hint">Planning searches...</p>`;
+  const btn = $("#askBtn"); btn.disabled = true; btn.textContent = "Working...";
+  setHow(true); $("#trace").innerHTML = `<li><span class="dot">1</span><span class="t">Planning searches</span></li>`;
+  document.querySelectorAll(".banner").forEach(b => b.remove());
   let res;
-  try {
-    const r = await fetch("api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
+  try { const r = await fetch("api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({question: $("#q").value, camera_id: D && D.camera_id})});
-    if (!r.ok) throw 0; res = await r.json();
-  } catch { res = Object.assign({}, window.LINGER_CACHE, {fallback: true}); }
-  D = res; sel = {kind: null, id: null}; index(D);
-  await replaySteps(D.trace);
+    if (!r.ok) throw 0; res = await r.json(); }
+  catch { res = Object.assign({}, window.LINGER_CACHE, {fallback: true}); }
+  D = res; sel = {kind: null, id: null}; index();
+  await replay(D.trace);
   render(true);
-  btn.disabled = false; btn.textContent = "Ask";
+  btn.disabled = false; btn.textContent = "Ask Linger";
 });
-
 (async () => {
   D = await load();
-  if (!D) { $("#details").innerHTML = `<p class="hint">No results yet. Run scripts/build_cache.py, then reload.</p>`; return; }
+  if (!D) { $("#detail").innerHTML = `<p class="empty">No results yet. Run make cache-rules, then reload this page.</p>`; return; }
   render(false);
-  addEventListener("resize", () => drawLinkograph());
-  $("#steps").innerHTML = stepsHTML(D.trace);
-  tab("steps");
 })();

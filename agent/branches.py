@@ -14,12 +14,16 @@ If LIGHT_STATS show many stays at night, consider lighting. If a bus arrival is 
 Each branch cites at least 2 segment_ids from EVIDENCE; never invent ids.
 Each intervention names one risk, always checking the clear walking path and accessibility.
 Use "likely", "may", "in similar clips". Describe behavior only: no faces, identity, emotion, clothing.
+Never use "will": every prediction and timeline state uses "may" or "likely".
+Do not claim outcomes like "reducing congestion"; describe only what people may do.
 Never say "caused", "because", or "made"."""
 
 REC_SYSTEM = """From zone stats, critical events and branches, give ONE placement recommendation for a
-public space. Return JSON {"zone","action","why","segment_ids"}: action names what to place
-(seating, table, sign, shelter) and which way it faces; why is 2 short sentences about observed
-behavior; segment_ids are cited from the branches only. Links are associations, not causes."""
+public space. Return JSON {"zone","action","why","segment_ids"}: action is one full sentence naming
+what to place (seating, table, sign, shelter), where (use the place's feature name, like "the bus stop"),
+and which way it faces, for example "Add a bench at the bus stop, facing the crosswalk."; why is 2 short
+sentences about observed behavior; segment_ids are cited from the branches only. Links are associations,
+not causes."""
 
 
 def gather_evidence(a, b, segments, events, search_fn, cam):
@@ -160,6 +164,8 @@ def template_recommendation(branches, stats, b):
 @llm.op
 def llm_recommendation(branches, stats, critical):
     res = llm.chat_json(REC_SYSTEM, json.dumps({"ZONE_STATS": stats, "CRITICAL": critical, "BRANCHES": branches}))
+    if len(str(res.get("action", "")).split()) < 5:
+        return None
     cited = {c["segment_id"] for br in branches for c in br["evidence"]}
     res["segment_ids"] = [s for s in res.get("segment_ids", []) if s in cited]
     res["n"] = len(res["segment_ids"])
