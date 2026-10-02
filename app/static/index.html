@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linger</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%2324272A%22/%3E%3Cpath d=%22M3 13 L8 4 L13 13%22 stroke=%22%23F2C230%22 stroke-width=%222%22 fill=%22none%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"></span>Linger</div>
+  <form class="ask" id="askForm">
+    <label class="sr" for="q">Design question</label>
+    <input id="q" value="Where should seating go on this block?" autocomplete="off">
+    <button type="submit" id="askBtn">Ask</button>
+  </form>
+  <div class="cam" id="camLabel"></div>
+</header>
+
+<main class="grid">
+  <section class="view" aria-label="Camera view">
+    <div class="frame">
+      <video id="clip" muted playsinline preload="metadata"></video>
+      <svg id="zones" viewBox="0 0 640 360" role="img" aria-label="Camera frame split into a 3 by 3 zone grid"></svg>
+    </div>
+    <div class="viewfoot">
+      <p class="caption" id="viewCaption">Zones are shaded by how many people stopped, stood, sat or lingered there.</p>
+      <div class="lightchips" role="group" aria-label="Time of day">
+        <button data-light="all" aria-pressed="true">All</button><button data-light="day" aria-pressed="false">Day</button><button data-light="night" aria-pressed="false">Night</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="details">Details</button>
+      <button role="tab" aria-selected="false" data-tab="steps">Agent steps</button>
+    </div>
+    <div class="tabbody" id="details"></div>
+    <div class="tabbody" id="steps" hidden></div>
+  </aside>
+
+  <section class="lg" aria-label="Linkograph">
+    <div class="lghead">
+      <h2>Linkograph</h2>
+      <p>Each dot is a behavior event in time order. Each yellow peak joins two events that happened close in time and space, including vehicles and people. Bigger dots have more links; ringed dots are critical moves.</p>
+      <ul class="legend">
+        <li><i class="k stay"></i>stays (stop, stand, sit, linger)</li>
+        <li><i class="k walk"></i>walks</li>
+        <li><i class="k turn"></i>changes path</li>
+        <li><i class="k veh"></i>vehicles (bus, car, truck, bike)</li>
+        <li><i class="k night"></i>night</li>
+      </ul>
+    </div>
+    <div class="lgscroll"><svg id="lg"></svg></div>
+  </section>
+
+  <section class="futures" aria-label="Plausible futures">
+    <div class="fhead">
+      <h2>Plausible futures</h2>
+      <p id="fsub"></p>
+    </div>
+    <svg id="br" viewBox="0 0 1100 200"></svg>
+  </section>
+
+  <section class="rec" id="rec" aria-label="Recommendation"></section>
+</main>
+
+<script src="cache.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

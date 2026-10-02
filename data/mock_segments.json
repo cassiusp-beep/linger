@@ -1,0 +1,200 @@
+[
+ {
+  "segment_id": "cam2_s00",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 0,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=1s] 3 walking, BC. [t=4s] 1 stops, BL, near bus stop. [t=8s] 1 lingering, BL, near bus stop.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s01",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 10,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 4 walking, BC. [t=7s] 1 path change, BC, near bus stop, detour.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s02",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 20,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=3s] 3 standing, BL, group, near bus stop. [t=5s] car blocks the crosswalk, BR, near crosswalk. [t=7s] 2 waiting to cross, BR, near crosswalk.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s03",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 30,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=1s] 1 sitting, ML, near ledge. [t=4s] 1 stops, ML, near ledge. [t=9s] 2 walking, BC.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s04",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 40,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=2s] 2 lingering, ML, group, near ledge. [t=6s] 1 path change, BC, near pole, slowdown.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s05",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 50,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=0s] 5 walking, BC. [t=3s] 3 waiting to cross, BR, group, near crosswalk. [t=8s] 1 stops, BL, near bus stop.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s06",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 60,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=1s] bus arrives, BL, near bus stop. [t=3s] 2 standing, BL, group, near bus stop. [t=5s] 1 path change, BC, near bus stop, detour.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s07",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 70,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=3s] 1 sitting, ML, near ledge. [t=6s] 1 lingering, MR, near tree.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s08",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 80,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=1s] 2 standing, BL, group, near bus stop. [t=4s] 1 lingering, BL, near bus stop. [t=7s] 2 walking, BR.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s09",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 90,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=2s] 1 lingering, BL, near bus stop. [t=5s] 2 standing, BL, group, near bus stop. [t=8s] 1 path change, C, near pole, detour.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s10",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 100,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 3 standing, BL, group, near bus stop. [t=8s] 1 standing, TC, near storefront.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s11",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 110,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=1s] 1 lingering, BL, near bus stop. [t=4s] 2 waiting to cross, BR, near crosswalk. [t=7s] car blocks the crosswalk, BR, near crosswalk. [t=9s] 1 path change, BR, near crosswalk, detour.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam2_s12",
+  "video_id": "sf-streets/2",
+  "camera_id": "sf_streets_cam-2",
+  "offset": 120,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=3s] 2 stops, TC, group, near storefront. [t=6s] 1 lingering, BL, near bus stop.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam3_s00",
+  "video_id": "sf-streets/3",
+  "camera_id": "sf_streets_cam-3",
+  "offset": 0,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=2s] 2 sitting, BL, group, near bench. [t=6s] 1 stops, BL, near bench.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam3_s01",
+  "video_id": "sf-streets/3",
+  "camera_id": "sf_streets_cam-3",
+  "offset": 10,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=1s] 1 sitting, BL, near bench. [t=5s] 2 lingering, BL, group, near bench.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam3_s02",
+  "video_id": "sf-streets/3",
+  "camera_id": "sf_streets_cam-3",
+  "offset": 20,
+  "t0": 0,
+  "t1": 10,
+  "light": "day",
+  "caption": "Day. [t=3s] 3 walking, BC. [t=6s] 1 path change, BC, near bench, detour.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam3_s03",
+  "video_id": "sf-streets/3",
+  "camera_id": "sf_streets_cam-3",
+  "offset": 30,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=2s] 2 sitting, BL, group, near bench. [t=7s] 1 sitting, BL, near bench.",
+  "clip_url": null
+ },
+ {
+  "segment_id": "cam3_s04",
+  "video_id": "sf-streets/3",
+  "camera_id": "sf_streets_cam-3",
+  "offset": 40,
+  "t0": 0,
+  "t1": 10,
+  "light": "night",
+  "caption": "Night. [t=2s] bus arrives, BL, near bus stop. [t=4s] 2 standing, BL, group, near bus stop.",
+  "clip_url": null
+ }
+]

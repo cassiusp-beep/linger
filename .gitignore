@@ -1,0 +1,9 @@
+.env
+*.config
+*k8s.yaml
+*secret*.yaml
+app/static/clips/
+*.mp4
+*.mov
+__pycache__/
+.venv/
